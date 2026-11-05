@@ -1,6 +1,6 @@
 # glyphworks
 
-Real-time 3D works drawn entirely as glowing glyphs. WebGL2, Three.js, custom GLSL, React UI, no video or model assets. Runs in the browser, one page per work.
+Real-time 3D works drawn entirely as glowing glyphs. WebGL2, Three.js, custom GLSL, React UI, no video. Models are plain triangle meshes. Runs in the browser, one page per work.
 
 ## Works
 
