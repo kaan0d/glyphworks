@@ -3,6 +3,10 @@
 html, body { margin: 0; background: #000; color: #cfd3dc; font: 14px/1.5 ui-monospace, Consolas, Menlo, monospace; min-height: 100%; }
 header { text-align: center; padding: clamp(36px, 9vh, 90px) 20px 28px; }
 h1 { margin: 0; font-weight: 300; letter-spacing: 0.5em; font-size: clamp(16px, 2.4vw, 22px); color: #eef1f8; text-shadow: 0 0 22px rgba(200, 215, 255, 0.5); padding-left: 0.5em; }
+header .logo { display: block; margin: 0 auto 22px; }
+.links { margin-top: 16px; display: flex; gap: 22px; justify-content: center; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; }
+.links a { color: #8a90a0; text-decoration: none; border-bottom: 1px solid transparent; transition: color .25s, border-color .25s; }
+.links a:hover, .links a:focus-visible { color: #eef1f8; border-color: #5a6278; outline: none; }
 header p { margin: 10px 0 0; color: #6f7585; letter-spacing: 0.12em; font-size: 12px; }
 main { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 22px; max-width: 1180px; margin: 0 auto; padding: 8px 22px 70px; }
 .card { display: block; color: inherit; text-decoration: none; border: 1px solid #1c1f27; background: #07080b; transition: border-color .35s, box-shadow .35s, transform .35s; }
