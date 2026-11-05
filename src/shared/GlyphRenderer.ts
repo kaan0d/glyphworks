@@ -325,7 +325,7 @@ export class GlyphRenderer {
       for (const t of T) t.z -= dt * 0.45
       this.trail = T.filter((t) => t.z > 0)
       const TT = this.trail
-      if (this.ptr) {
+      if (this.ptr && s.mouseFx) {
         const x = this.ptr.x * halfH * this.camera.aspect, y = this.ptr.y * halfH
         const cur = this.cur && TT.includes(this.cur) ? this.cur : null
         // a new sample starts at the warp already present there (or the previous sample's) and ramps up, so a half-healed area never snaps back to full

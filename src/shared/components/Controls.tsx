@@ -24,7 +24,7 @@ export function Controls({ settings, apiRef }: Props) {
       <input type="range" min={min} max={max} step={step} value={settings[k]} onChange={(e) => set(k, +e.target.value)} />
     </label>
   )
-  const check = (label: string, k: 'orbits' | 'rose' | 'technical') => (
+  const check = (label: string, k: 'orbits' | 'rose' | 'technical' | 'mouseFx') => (
     <label className="chk">
       <input type="checkbox" checked={settings[k]} onChange={(e) => set(k, e.target.checked)} />
       {label}
@@ -51,6 +51,7 @@ export function Controls({ settings, apiRef }: Props) {
           {slider('Tilt (deg)', 'tilt', -90, 90, 1)}
           {slider('Angle offset (deg)', 'yaw', -180, 180, 1)}
           {slider('Brightness', 'brightness', 0, 3)}
+          {check('Mouse effect', 'mouseFx')}
           {slider('Mouse push', 'push', 0, 3)}
           {slider('Push radius', 'pushRadius', 0.1, 1.5)}
           {slider('Character density', 'density', 0.2, 1)}
