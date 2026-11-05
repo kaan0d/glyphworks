@@ -1,4 +1,4 @@
-/** Timings measured from reference.mp4 (20 s, 30 fps): draw 0.3-5.6 s, spin starts ~6.2 s, one turn ~12 s. */
+/** Timings: draw 0.3-5.6 s, spin starts ~6.2 s, one turn ~12 s. */
 export const ANIM = {
   drawStart: 0.3,
   drawEnd: 5.6,

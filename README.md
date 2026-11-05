@@ -7,7 +7,7 @@ Real-time 3D works drawn entirely as glowing glyphs. WebGL2, Three.js, custom GL
 | Work | What it is |
 | --- | --- |
 | [`heart`](works/heart) | Hollow, inflated heart balloon, drawn from the tip upward |
-| [`ring`](works/ring) | Diamond ring: band, prongs, then the faceted stone filling in (after the reference video) |
+| [`ring`](works/ring) | Diamond ring: band, prongs, then the faceted stone filling in |
 
 ## Features (shared by all works)
 

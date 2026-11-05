@@ -5,7 +5,7 @@ export const RING = {
   bandA: 0.045, // half thickness (radial)
   bandB: 0.1, // half width (front-back)
   squareness: 0.45, // cross-section exponent: 1 = ellipse, smaller = squarer
-  facets: 16, // sides of the stone, as in the reference
+  facets: 16, // sides of the stone
   tableR: 0.14,
   tableY: 0.96,
   girdleR: 0.25,

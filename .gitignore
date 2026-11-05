@@ -8,7 +8,7 @@ dist
 .DS_Store
 Thumbs.db
 
-# AI tooling, prompts, reference media and working notes stay local
+# Local-only: AI tooling, prompts, media and working notes
 development/
 .claude/
 CLAUDE.md

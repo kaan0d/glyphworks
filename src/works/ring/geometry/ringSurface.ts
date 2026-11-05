@@ -5,7 +5,7 @@ const TAU = Math.PI * 2
 const sgnPow = (x: number, p: number) => Math.sign(x) * Math.abs(x) ** p
 
 /**
- * Reveal order follows the reference: the band draws itself from the bottom up (0..0.5),
+ * Reveal order: the band draws itself from the bottom up (0..0.5),
  * the prongs rise (0.5..0.7), then the stone fills in from its culet (0.7..1).
  */
 function band(b: MeshBuilder) {
