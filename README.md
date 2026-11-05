@@ -15,7 +15,7 @@ Real-time 3D works drawn entirely as glowing glyphs. WebGL2, Three.js, custom GL
 | `dna` | DNA double helix with base pairs | [Preview](https://kaandinc.com/glyphworks/dna/) |
 | `nautilus` | Nautilus shell: logarithmic spiral with fine ribs | [Preview](https://kaandinc.com/glyphworks/nautilus/) |
 | `planet` | Ringed planet with a moon | [Preview](https://kaandinc.com/glyphworks/planet/) |
-| `crown` | Crown with five points and jewels | [Preview](https://kaandinc.com/glyphworks/crown/) |
+| `sauron-crown` | Spiked crown from a mesh, rising from the base to the tips | [Preview](https://kaandinc.com/glyphworks/sauron-crown/) |
 | `key` | Old key with a round bow and toothed bit | [Preview](https://kaandinc.com/glyphworks/key/) |
 | `can` | Cola can imported from an OBJ: body rises from the base, rim and tab last | [Preview](https://kaandinc.com/glyphworks/can/) |
 | `beer-bottle` | Beer bottle imported from an OBJ: see-through glass, beer, then the plug | [Preview](https://kaandinc.com/glyphworks/beer-bottle/) |

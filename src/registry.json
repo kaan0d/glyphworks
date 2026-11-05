@@ -45,9 +45,9 @@
     "description": "A ringed planet with a moon: banded globe, two rings and a gap between them."
   },
   {
-    "id": "crown",
-    "title": "Crown",
-    "description": "A crown with five points, a rim ring and a jewel on every point."
+    "id": "sauron-crown",
+    "title": "Sauron's crown",
+    "description": "A spiked crown from a mesh, rising from the base to the tips."
   },
   {
     "id": "key",
