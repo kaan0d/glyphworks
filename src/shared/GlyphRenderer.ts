@@ -106,6 +106,7 @@ export class GlyphRenderer {
     const mg = new BufferGeometry()
     mg.setAttribute('position', new BufferAttribute(mesh.pos, 3))
     mg.setAttribute('aThr', new BufferAttribute(mesh.thr, 1))
+    mg.setAttribute('aGhost', new BufferAttribute(mesh.ghost ?? new Float32Array(mesh.thr.length), 1))
     mg.setIndex(new BufferAttribute(mesh.idx, 1))
     this.disposables.push(mg)
     {

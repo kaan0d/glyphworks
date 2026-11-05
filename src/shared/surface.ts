@@ -8,6 +8,7 @@ export interface SurfaceMesh {
   seam: Float32Array // 0..1: edge/highlight emphasis, also steers sparkle placement
   weight: Float32Array // relative glyph density
   idx: Uint32Array
+  ghost?: Float32Array // 1 = does not occlude the glyphs behind it (glass you can see through)
 }
 
 /** What a work provides to the renderer. */
@@ -74,10 +75,13 @@ export class MeshBuilder {
   private seam: number[] = []
   private weight: number[] = []
   private idx: number[] = []
+  private ghosts: number[] = []
+  /** Set while adding parts that must not hide what is behind them. */
+  ghost = false
 
   vert(p: ArrayLike<number>, n: ArrayLike<number>, thr: number, seam: number, w: number) {
     this.pos.push(p[0], p[1], p[2]); this.nrm.push(n[0], n[1], n[2])
-    this.thr.push(thr); this.seam.push(seam); this.weight.push(w)
+    this.thr.push(thr); this.seam.push(seam); this.weight.push(w); this.ghosts.push(this.ghost ? 1 : 0)
     return this.pos.length / 3 - 1
   }
 
@@ -125,7 +129,7 @@ export class MeshBuilder {
    * `flip` reverses the result for open or one-sided surfaces.
    */
   surface(o: {
-    nu: number; nv: number; f: Fn; thr: (p: Float64Array) => number; seam?: number; w?: number
+    nu: number; nv: number; f: Fn; thr: (p: Float64Array) => number; seam?: number; w?: number | ((u: number, v: number) => number)
     wrapU?: boolean; wrapV?: boolean; ref?: Fn; flip?: boolean
   }) {
     const { nu, nv, f, thr, ref } = o
@@ -147,7 +151,7 @@ export class MeshBuilder {
         ref(u, v, rf)
         if (nx * (p[0] - rf[0]) + ny * (p[1] - rf[1]) + nz * (p[2] - rf[2]) < 0) { nx = -nx; ny = -ny; nz = -nz }
       }
-      this.vert(p, [nx, ny, nz], thr(p), o.seam ?? 0, o.w ?? 1)
+      this.vert(p, [nx, ny, nz], thr(p), o.seam ?? 0, typeof o.w === 'function' ? o.w(u, v) : (o.w ?? 1))
     }
     const at = (i: number, j: number) => base + (i % NU) * NV + (j % NV)
     for (let i = 0; i < (wrapU ? NU : NU - 1); i++) for (let j = 0; j < (wrapV ? NV : NV - 1); j++) {
@@ -171,14 +175,14 @@ export class MeshBuilder {
   merge(m: SurfaceMesh) {
     const off = this.pos.length / 3
     for (let i = 0; i < m.pos.length; i++) { this.pos.push(m.pos[i]); this.nrm.push(m.nrm[i]) }
-    for (let i = 0; i < m.thr.length; i++) { this.thr.push(m.thr[i]); this.seam.push(m.seam[i]); this.weight.push(m.weight[i]) }
+    for (let i = 0; i < m.thr.length; i++) { this.thr.push(m.thr[i]); this.seam.push(m.seam[i]); this.weight.push(m.weight[i]); this.ghosts.push(m.ghost?.[i] ?? 0) }
     for (let i = 0; i < m.idx.length; i++) this.idx.push(m.idx[i] + off)
   }
 
   build(): SurfaceMesh {
     return {
       pos: Float32Array.from(this.pos), nrm: Float32Array.from(this.nrm), thr: Float32Array.from(this.thr),
-      seam: Float32Array.from(this.seam), weight: Float32Array.from(this.weight), idx: Uint32Array.from(this.idx),
+      seam: Float32Array.from(this.seam), weight: Float32Array.from(this.weight), idx: Uint32Array.from(this.idx), ghost: Float32Array.from(this.ghosts),
     }
   }
 }
