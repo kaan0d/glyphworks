@@ -23,7 +23,7 @@ Real-time 3D works drawn entirely as glowing glyphs. WebGL2, Three.js, custom GL
 | `beer-bottle` | Beer bottle imported from an OBJ: see-through glass, beer, then the plug | [Preview](https://kaandinc.com/glyphworks/beer-bottle/) |
 | `wine-bottle` | Wine bottle imported from an OBJ: see-through glass, wine, then the capsule | [Preview](https://kaandinc.com/glyphworks/wine-bottle/) |
 
-All works in one place: [kaandinc.com/glyphworks](https://kaandinc.com/glyphworks/). Updates on [Instagram](https://www.instagram.com/glyphworksart/).
+All works in one place: [kaandinc.com/glyphworks](https://kaandinc.com/glyphworks/).
 
 ## Features (shared by all works)
 
