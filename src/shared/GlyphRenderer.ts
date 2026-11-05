@@ -55,8 +55,17 @@ export class GlyphRenderer {
   private uni = {
     uTime: U(0), uT0: U(ANIM.drawStart), uT1: U(ANIM.drawEnd), uRot: U(new Matrix3()),
     uRes: U(new Vector2(1, 1)), uKey: U(new Vector3(0, 0.8, 0.6).normalize()), uRim: U(new Vector3(1, 0.5, 0).normalize()),
-    uRose: U(0),
+    uRose: U(0), uBright: U(1), uMouse: U(new Vector2(0, 0)), uMouseStr: U(0), uPush: U(1), uPushR: U(0.9),
   }
+  // pointer in NDC; null when outside the canvas. Shader sees a smoothed world position + fade strength.
+  private ptr: Vector2 | null = null
+  private ptrSmooth = new Vector2()
+  private tmpR = new Matrix4()
+  private onMove = (e: PointerEvent) => {
+    const r = this.canvas.getBoundingClientRect()
+    this.ptr = new Vector2(((e.clientX - r.left) / r.width) * 2 - 1, -(((e.clientY - r.top) / r.height) * 2 - 1))
+  }
+  private onLeave = () => { this.ptr = null }
   private disposables: { dispose(): void }[] = []
   private glyphGeo!: InstancedBufferGeometry
   private sparkGeo!: InstancedBufferGeometry
@@ -77,6 +86,8 @@ export class GlyphRenderer {
     this.renderer = new WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: 'high-performance' })
     this.renderer.setClearColor(0x000000, 1)
     canvas.addEventListener('webglcontextlost', this.onLost)
+    canvas.addEventListener('pointermove', this.onMove)
+    canvas.addEventListener('pointerleave', this.onLeave)
     this.camera.position.set(0, 0, 7.2)
     this.build()
     this.applyQuality()
@@ -293,8 +304,20 @@ export class GlyphRenderer {
     const u = this.uni
 
     u.uTime.value = t
-    u.uRot.value.setFromMatrix4(this.tmp4.makeRotationY(tl.angle))
+    const rad = Math.PI / 180
+    this.tmp4.makeRotationY(tl.angle + s.yaw * rad)
+    u.uRot.value.setFromMatrix4(this.tmp4.premultiply(this.tmpR.makeRotationX(s.tilt * rad)))
     u.uRose.value = s.rose ? 1 : 0
+    u.uBright.value = s.brightness
+    u.uPush.value = s.push; u.uPushR.value = s.pushRadius
+    {
+      // camera looks down -z at the origin: NDC maps linearly to the z=0 plane
+      const halfH = Math.tan((FOV * Math.PI) / 360) * this.camera.position.z
+      if (this.ptr) this.ptrSmooth.lerp(this.ptr, Math.min(dt * 18, 1))
+      u.uMouse.value.set(this.ptrSmooth.x * halfH * this.camera.aspect, this.ptrSmooth.y * halfH)
+      const target = this.ptr ? 1 : 0
+      u.uMouseStr.value += (target - u.uMouseStr.value) * Math.min(dt * (target ? 10 : 4), 1)
+    }
     // key light fixed, rim light circles: L(t) = normalize(cos .9t, .5, sin .9t)
     u.uRim.value.set(Math.cos(t * 0.9), 0.5, Math.sin(t * 0.9)).normalize()
 
@@ -338,6 +361,8 @@ export class GlyphRenderer {
 
   dispose() {
     this.canvas.removeEventListener('webglcontextlost', this.onLost)
+    this.canvas.removeEventListener('pointermove', this.onMove)
+    this.canvas.removeEventListener('pointerleave', this.onLeave)
     this.disposeComposer()
     this.disposables.forEach((d) => d.dispose())
     this.scene.clear()

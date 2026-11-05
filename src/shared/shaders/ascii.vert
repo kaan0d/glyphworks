@@ -9,6 +9,11 @@ uniform float uGlyphCount;
 uniform float uRose;
 uniform vec3 uKey;
 uniform vec3 uRim;
+uniform float uBright;
+uniform vec2 uMouse;
+uniform float uMouseStr;
+uniform float uPush;
+uniform float uPushR;
 
 varying vec2 vUv;
 varying vec3 vColor;
@@ -37,6 +42,13 @@ void main() {
   vec3 p = aPos + aNormal * (1.0 - ease) * 0.06; // subtle gathering onto the surface
   vec3 w = toWorld(p);
   vec3 n = normalize(toWorldN(aNormal));
+
+  // mouse repel: push glyphs away from the pointer (xy plane), with a random depth scatter
+  vec2 dm = w.xy - uMouse;
+  float dl = length(dm);
+  float f = smoothstep(uPushR, 0.0, dl) * uPush * uMouseStr;
+  w.xy += (dl > 1e-4 ? dm / dl : vec2(0.0)) * f * 0.45;
+  w.z += (aSeed.y - 0.5) * f * 0.6;
   vec3 V = normalize(cameraPosition - w);
 
   // key + moving rim light, wrapped diffuse for a soft balloon falloff
@@ -56,7 +68,7 @@ void main() {
   float flash = 1.0 + 2.0 * (1.0 - e) * (1.0 - e);
   float inten = clamp(lum, 0.0, 1.5);
   float a = 0.4 * (0.15 + 0.85 * smoothstep(0.1, 1.0, inten)) * flash * ease;
-  vColor = mix(silverPalette(inten), rosePalette(inten), uRose) * a;
+  vColor = mix(silverPalette(inten), rosePalette(inten), uRose) * a * uBright;
 
   vec3 toCam = normalize(cameraPosition - w);
   vec4 clip = projectionMatrix * viewMatrix * vec4(w + toCam * 0.02, 1.0);

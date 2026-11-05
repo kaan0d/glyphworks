@@ -18,9 +18,9 @@ export function Controls({ settings, apiRef }: Props) {
     return () => { clearInterval(id); window.removeEventListener('keydown', key) }
   }, [apiRef])
 
-  const slider = (label: string, k: 'speed' | 'density' | 'glyphScale' | 'sparkle' | 'particles' | 'bloom', min: number, max: number, step = 0.05) => (
+  const slider = (label: string, k: 'speed' | 'density' | 'glyphScale' | 'sparkle' | 'particles' | 'bloom' | 'brightness' | 'tilt' | 'yaw' | 'push' | 'pushRadius', min: number, max: number, step = 0.05) => (
     <label>
-      {label}
+      {label}: {settings[k].toFixed(2)}
       <input type="range" min={min} max={max} step={step} value={settings[k]} onChange={(e) => set(k, +e.target.value)} />
     </label>
   )
@@ -48,6 +48,11 @@ export function Controls({ settings, apiRef }: Props) {
             <button onClick={() => set('paused', !settings.paused)}>{settings.paused ? 'Resume' : 'Pause'}</button>
           </div>
           {slider('Rotation speed', 'speed', 0, 3)}
+          {slider('Tilt (deg)', 'tilt', -90, 90, 1)}
+          {slider('Angle offset (deg)', 'yaw', -180, 180, 1)}
+          {slider('Brightness', 'brightness', 0, 3)}
+          {slider('Mouse push', 'push', 0, 3)}
+          {slider('Push radius', 'pushRadius', 0.2, 2.5)}
           {slider('Character density', 'density', 0.2, 1)}
           {slider('Character scale', 'glyphScale', 0.6, 2)}
           {slider('Sparkles', 'sparkle', 0, 2)}
