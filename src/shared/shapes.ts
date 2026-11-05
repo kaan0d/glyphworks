@@ -103,7 +103,8 @@ export function tube(b: MeshBuilder, o: TubeOpts) {
     nu: o.nt, nv: o.nr ?? 14, wrapU: !!o.closed, wrapV: true, thr: o.thr, seam: o.seam, w: o.w,
     f: (u, v, out) => {
       const t = o.closed ? u : inner(u)
-      const p0 = o.path(t - e), p1 = o.path(t), p2 = o.path(t + e)
+      const lo = o.closed ? t - e : Math.max(t - e, 0), hi = o.closed ? t + e : Math.min(t + e, 1) // paths need not extend past [0,1]
+      const p0 = o.path(lo), p1 = o.path(t), p2 = o.path(hi)
       const T: V3 = [p2[0] - p0[0], p2[1] - p0[1], p2[2] - p0[2]]
       const tl = Math.hypot(...T) || 1
       T[0] /= tl; T[1] /= tl; T[2] /= tl

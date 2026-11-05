@@ -13,5 +13,30 @@
     "id": "bottle",
     "title": "Bottle",
     "description": "A longneck beer bottle: heel, body, shoulder and neck rise, then the crown cap closes it."
+  },
+  {
+    "id": "wineglass",
+    "title": "Wine glass",
+    "description": "A tulip wine glass: foot and stem first, then the hollow bowl fills up."
+  },
+  {
+    "id": "queen",
+    "title": "Queen",
+    "description": "A chess queen: stepped base, waisted body and a crown of points."
+  },
+  {
+    "id": "teapot",
+    "title": "Teapot",
+    "description": "A teapot with a curved spout, a loop handle and a domed lid with a knob."
+  },
+  {
+    "id": "hourglass",
+    "title": "Hourglass",
+    "description": "An hourglass: pinched glass bulbs on two plates, three posts and a mound of sand."
+  },
+  {
+    "id": "lightbulb",
+    "title": "Light bulb",
+    "description": "A light bulb: glass globe, threaded screw base and a looping filament."
   }
 ]
