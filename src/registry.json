@@ -20,19 +20,9 @@
     "description": "A tulip wine glass: foot and stem first, then the hollow bowl fills up."
   },
   {
-    "id": "teapot",
-    "title": "Teapot",
-    "description": "A teapot with a curved spout, a loop handle and a domed lid with a knob."
-  },
-  {
     "id": "hourglass",
     "title": "Hourglass",
     "description": "An hourglass: pinched glass bulbs on two plates, three posts and a mound of sand."
-  },
-  {
-    "id": "lightbulb",
-    "title": "Light bulb",
-    "description": "A light bulb: glass globe, threaded screw base and a looping filament."
   },
   {
     "id": "mobius",
@@ -43,11 +33,6 @@
     "id": "knot",
     "title": "Trefoil knot",
     "description": "A trefoil knot: one thick tube that crosses itself three times."
-  },
-  {
-    "id": "klein",
-    "title": "Klein bottle",
-    "description": "A Klein bottle: a pear-shaped bulb whose neck bends over and re-enters through its own wall."
   },
   {
     "id": "dna",
@@ -65,11 +50,6 @@
     "description": "A ringed planet with a moon: banded globe, two rings and a gap between them."
   },
   {
-    "id": "paperplane",
-    "title": "Paper plane",
-    "description": "A folded paper plane built from flat, paper-thin facets."
-  },
-  {
     "id": "crown",
     "title": "Crown",
     "description": "A crown with five points, a rim ring and a jewel on every point."
@@ -78,10 +58,5 @@
     "id": "key",
     "title": "Key",
     "description": "An old key: round bow, collared shaft and a toothed bit."
-  },
-  {
-    "id": "cupid",
-    "title": "Heart and arrow",
-    "description": "The heart balloon pierced by an arrow, with the heart hiding the middle of the shaft."
   }
 ]

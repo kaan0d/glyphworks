@@ -10,19 +10,14 @@ Real-time 3D works drawn entirely as glowing glyphs. WebGL2, Three.js, custom GL
 | `ring` | Diamond ring: band, prongs, then the faceted stone filling in | [Preview](https://kaandinc.com/glyphworks/ring/) |
 | `bottle` | Longneck beer bottle: glass rises from the base, label and collar fill in, the crown cap closes last | [Preview](https://kaandinc.com/glyphworks/bottle/) |
 | `wineglass` | Wine glass: foot and stem first, then the hollow tulip bowl fills | [Preview](https://kaandinc.com/glyphworks/wineglass/) |
-| `teapot` | Teapot with a curved spout, loop handle and knobbed lid | [Preview](https://kaandinc.com/glyphworks/teapot/) |
 | `hourglass` | Hourglass: pinched glass bulbs, plates, posts and a mound of sand | [Preview](https://kaandinc.com/glyphworks/hourglass/) |
-| `lightbulb` | Light bulb: glass globe, threaded screw base, filament | [Preview](https://kaandinc.com/glyphworks/lightbulb/) |
 | `mobius` | Möbius band: a wide ribbon with one half twist | [Preview](https://kaandinc.com/glyphworks/mobius/) |
 | `knot` | Trefoil knot as one thick tube | [Preview](https://kaandinc.com/glyphworks/knot/) |
-| `klein` | Klein bottle: the neck passes through its own wall | [Preview](https://kaandinc.com/glyphworks/klein/) |
 | `dna` | DNA double helix with base pairs | [Preview](https://kaandinc.com/glyphworks/dna/) |
 | `nautilus` | Nautilus shell: logarithmic spiral with fine ribs | [Preview](https://kaandinc.com/glyphworks/nautilus/) |
 | `planet` | Ringed planet with a moon | [Preview](https://kaandinc.com/glyphworks/planet/) |
-| `paperplane` | Paper plane from flat, paper-thin facets | [Preview](https://kaandinc.com/glyphworks/paperplane/) |
 | `crown` | Crown with five points and jewels | [Preview](https://kaandinc.com/glyphworks/crown/) |
 | `key` | Old key with a round bow and toothed bit | [Preview](https://kaandinc.com/glyphworks/key/) |
-| `cupid` | Heart balloon pierced by an arrow | [Preview](https://kaandinc.com/glyphworks/cupid/) |
 
 All works in one place: [kaandinc.com/glyphworks](https://kaandinc.com/glyphworks/).
 
