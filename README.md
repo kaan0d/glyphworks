@@ -4,13 +4,6 @@ Real-time 3D works drawn entirely as glowing glyphs. WebGL2, Three.js, custom GL
 
 ## Works
 
-<table>
-<tr><td align="center"><a href="https://kaandinc.com/glyphworks/heart/"><img src="public/thumbs/heart.gif" width="200" alt="heart"><br>heart</a></td><td align="center"><a href="https://kaandinc.com/glyphworks/ring/"><img src="public/thumbs/ring.gif" width="200" alt="ring"><br>ring</a></td><td align="center"><a href="https://kaandinc.com/glyphworks/wineglass/"><img src="public/thumbs/wineglass.gif" width="200" alt="wineglass"><br>wineglass</a></td><td align="center"><a href="https://kaandinc.com/glyphworks/hourglass/"><img src="public/thumbs/hourglass.gif" width="200" alt="hourglass"><br>hourglass</a></td></tr>
-<tr><td align="center"><a href="https://kaandinc.com/glyphworks/mobius/"><img src="public/thumbs/mobius.gif" width="200" alt="mobius"><br>mobius</a></td><td align="center"><a href="https://kaandinc.com/glyphworks/knot/"><img src="public/thumbs/knot.gif" width="200" alt="knot"><br>knot</a></td><td align="center"><a href="https://kaandinc.com/glyphworks/dna/"><img src="public/thumbs/dna.gif" width="200" alt="dna"><br>dna</a></td><td align="center"><a href="https://kaandinc.com/glyphworks/nautilus/"><img src="public/thumbs/nautilus.gif" width="200" alt="nautilus"><br>nautilus</a></td></tr>
-<tr><td align="center"><a href="https://kaandinc.com/glyphworks/planet/"><img src="public/thumbs/planet.gif" width="200" alt="planet"><br>planet</a></td><td align="center"><a href="https://kaandinc.com/glyphworks/sauron-crown/"><img src="public/thumbs/sauron-crown.gif" width="200" alt="sauron-crown"><br>sauron-crown</a></td><td align="center"><a href="https://kaandinc.com/glyphworks/key/"><img src="public/thumbs/key.gif" width="200" alt="key"><br>key</a></td><td align="center"><a href="https://kaandinc.com/glyphworks/can/"><img src="public/thumbs/can.gif" width="200" alt="can"><br>can</a></td></tr>
-<tr><td align="center"><a href="https://kaandinc.com/glyphworks/beer-bottle/"><img src="public/thumbs/beer-bottle.gif" width="200" alt="beer-bottle"><br>beer-bottle</a></td><td align="center"><a href="https://kaandinc.com/glyphworks/wine-bottle/"><img src="public/thumbs/wine-bottle.gif" width="200" alt="wine-bottle"><br>wine-bottle</a></td></tr>
-</table>
-
 | Work | What it is | |
 | --- | --- | --- |
 | `heart` | Hollow, inflated heart balloon, drawn from the tip upward | [Preview](https://kaandinc.com/glyphworks/heart/) |
@@ -55,7 +48,7 @@ Capture hook: `/heart/?t=9&angle=55&hold=1` jumps the timeline (seconds, degrees
 index.html              gallery, built from src/registry.json
 src/registry.json       id, title, description of every work
 works/<id>/index.html   entry page of a work (written by npm run sync), served at /<id>/
-public/thumbs/<id>.gif  animated preview of each work (gallery card and README)
+public/thumbs/<id>.gif  animated preview of each work (gallery card)
 src/shared/             renderer, shaders, timeline, controls, mesh helpers (used by every work)
 src/works/<id>/         geometry of one work: builds a surface mesh with per-vertex reveal order
 ```
@@ -65,7 +58,7 @@ src/works/<id>/         geometry of one work: builds a surface mesh with per-ver
 1. Create `src/works/<id>/scene.ts` exporting `scene` (a `SceneDef`: `build()` returns a mesh, `fit` frames the camera). Two ways to make the mesh:
    - from code: `src/shared/shapes.ts` has lathe, tube, sheet and box builders; see `src/works/knot/scene.ts` for a short example;
    - from a 3D file: export triangles to `src/works/<id>/mesh.json` and use `importedMesh` (`src/shared/importedMesh.ts`) with per-part rules for reveal order, density and see-through glass; see `src/works/can/scene.ts`.
-2. Add `{ id, title, description }` to `src/registry.json`, run `npm run sync` to write `works/<id>/index.html`, and add a GIF at `public/thumbs/<id>.gif` (gallery card and README preview).
+2. Add `{ id, title, description }` to `src/registry.json`, run `npm run sync` to write `works/<id>/index.html`, and add a GIF at `public/thumbs/<id>.gif` (gallery card).
 
 ## Request a work
 

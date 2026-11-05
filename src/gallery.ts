@@ -6,7 +6,7 @@ for (const w of works) {
   const a = document.createElement('a')
   a.href = `./${w.id}/`
   a.className = 'card'
-  a.innerHTML = `<div class="thumb"><img src="./thumbs/${w.id}.gif" alt="" loading="lazy" /></div>
+  a.innerHTML = `<div class="thumb"><img src="./thumbs/${w.id}.gif" alt="" loading="lazy" /><span class="tag">GIF preview, low quality</span></div>
     <div class="meta"><span class="t">${w.title}</span><span class="d">${w.description}</span></div>`
   grid.append(a)
 }
