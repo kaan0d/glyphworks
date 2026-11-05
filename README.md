@@ -54,7 +54,7 @@ Capture hook: `/heart/?t=9&angle=55&hold=1` jumps the timeline (seconds, degrees
 ```
 index.html              gallery, built from src/registry.json
 src/registry.json       id, title, description of every work
-<id>/index.html         entry page of a work (written by npm run sync), served at /<id>/
+works/<id>/index.html   entry page of a work (written by npm run sync), served at /<id>/
 public/thumbs/<id>.jpg  gallery thumbnails
 src/shared/             renderer, shaders, timeline, controls, mesh helpers (used by every work)
 src/works/<id>/         geometry of one work: builds a surface mesh with per-vertex reveal order
@@ -65,7 +65,7 @@ src/works/<id>/         geometry of one work: builds a surface mesh with per-ver
 1. Create `src/works/<id>/scene.ts` exporting `scene` (a `SceneDef`: `build()` returns a mesh, `fit` frames the camera). Two ways to make the mesh:
    - from code: `src/shared/shapes.ts` has lathe, tube, sheet and box builders; see `src/works/knot/scene.ts` for a short example;
    - from a 3D file: export triangles to `src/works/<id>/mesh.json` and use `importedMesh` (`src/shared/importedMesh.ts`) with per-part rules for reveal order, density and see-through glass; see `src/works/can/scene.ts`.
-2. Add `{ id, title, description }` to `src/registry.json`, run `npm run sync` to write `<id>/index.html`, and add a thumbnail at `public/thumbs/<id>.jpg`.
+2. Add `{ id, title, description }` to `src/registry.json`, run `npm run sync` to write `works/<id>/index.html`, and add a thumbnail at `public/thumbs/<id>.jpg`.
 
 ## Request a work
 
