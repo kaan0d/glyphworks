@@ -1,5 +1,7 @@
 # glyphworks
 
+![A pavé diamond ring drawn from 15,000 glyphs](docs/ring.gif)
+
 Real-time 3D works drawn entirely as glowing glyphs. WebGL2, Three.js, custom GLSL, React UI, no video. Models are plain triangle meshes. Runs in the browser, one page per work.
 
 ## Works
@@ -25,14 +27,12 @@ All works in one place: [kaandinc.com/glyphworks](https://kaandinc.com/glyphwork
 
 ## Features (shared by all works)
 
-- **Procedural shell:** outer heart contour and inner hole contour, blended into a pillow-shaped front and back surface with sealed seams and foil pleats; analytic normals.
-- **Glyph renderer:** area-uniform surface samples drawn as instanced quads from a glyph atlas; glyph picked by lighting, centre snapped to the pixel grid so glyphs stay sharp while rotating.
-- **Correct occlusion:** a hidden depth pass of the real shell hides back glyphs and keeps the hole empty.
-- **Lighting:** fixed key light plus a rim light circling over time, wrapped diffuse, tight foil speculars, fresnel edge.
-- **Glints:** thin cross-ray sparkles attached to surface points, visible only when the surface faces a light.
-- **Atmosphere:** drifting dust, faint intersecting orbit ellipses with travellers, light bloom.
-- **Timeline:** per-point reveal from the tip upward (0.3-5.6 s), then a steady spin (12 s per turn).
-- **Controls:** press `H` or click the dot (bottom right): replay, pause, speed, density, glyph scale, sparkles, particles, bloom, orbits, rose palette, technical overlay, quality preset.
+- **Surface sampling:** random points scattered over the triangle mesh, proportional to area and a per-vertex weight; each point is one instanced glyph quad.
+- **Lighting to glyph:** a fixed key light plus a rim light circling over time pick the character, so lit areas get dense glyphs and shadows get thin ones. Glyph centres snap to the pixel grid.
+- **Correct occlusion:** a hidden depth pass of the real shell hides back glyphs; parts marked `ghost` (glass) are skipped, so liquid shows through.
+- **Reveal timeline:** a per-vertex threshold draws each work in over 0.3-5.6 s, then a steady spin (12 s per turn).
+- **Atmosphere:** thin cross-ray glints, drifting dust, faint orbit ellipses, light bloom.
+- **Controls:** press `H` or click the dot (bottom right): replay, pause, speed, density, glyph scale, sparkles, particles, bloom, quality preset.
 
 ## Setup
 
@@ -57,7 +57,9 @@ src/works/<id>/         geometry of one work: builds a surface mesh with per-ver
 
 ## Adding a work
 
-1. Create `src/works/<id>/scene.ts` exporting `scene` (a `SceneDef`: `build()` returns a mesh, `fit` frames the camera). `src/shared/shapes.ts` has lathe, tube, sheet and box builders; see `src/works/wineglass/scene.ts` for a short example.
+1. Create `src/works/<id>/scene.ts` exporting `scene` (a `SceneDef`: `build()` returns a mesh, `fit` frames the camera). Two ways to make the mesh:
+   - from code: `src/shared/shapes.ts` has lathe, tube, sheet and box builders; see `src/works/knot/scene.ts` for a short example;
+   - from a 3D file: export triangles to `src/works/<id>/mesh.json` and use `importedMesh` (`src/shared/importedMesh.ts`) with per-part rules for reveal order, density and see-through glass; see `src/works/can/scene.ts`.
 2. Add `{ id, title, description }` to `src/registry.json`, run `npm run sync` to write `<id>/index.html`, and add a thumbnail at `public/thumbs/<id>.jpg`.
 
 ## Request a work
@@ -66,7 +68,8 @@ Want to see something new built as glyphs? [Open an issue](https://github.com/ka
 
 ## Limits
 
-- Shape was matched by eye, not fitted to pixels. The heart is a clean classic heart, not a copy of any product photo.
+- Heart and parametric works were matched by eye, not fitted to pixels.
+- Imported meshes (ring, bottles, can, wine glass, hourglass, crown) come from 3D files whose original licenses are not recorded here; check them before reusing the meshes outside this repo.
 - Looked at in headless Chrome (software renderer) only; frame rates on real GPUs are unmeasured.
 - WebGL2 required. Ultra quality needs a decent GPU, lower presets reduce counts and resolution.
 
