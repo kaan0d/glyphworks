@@ -58,5 +58,20 @@
     "id": "key",
     "title": "Key",
     "description": "An old key: round bow, collared shaft and a toothed bit."
+  },
+  {
+    "id": "can",
+    "title": "Can",
+    "description": "A cola can: body rising from the base, then the rim and tab."
+  },
+  {
+    "id": "beer-bottle",
+    "title": "Beer bottle",
+    "description": "A green beer bottle: glass rises, the beer fills in, the plug closes it."
+  },
+  {
+    "id": "wine-bottle",
+    "title": "Wine bottle",
+    "description": "A wine bottle: glass rises, the wine fills in, the capsule closes it."
   }
 ]
