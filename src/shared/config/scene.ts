@@ -22,5 +22,5 @@ export interface Settings {
 export const DEFAULTS: Settings = {
   quality: 'ultra', paused: false, speed: 1, density: 1, glyphScale: 1, sparkle: 1,
   particles: 1, bloom: 0.3, orbits: true, rose: false, technical: false,
-  brightness: 1, tilt: 0, yaw: 0, push: 1, pushRadius: 0.9,
+  brightness: 1, tilt: 0, yaw: 0, push: 1, pushRadius: 0.35,
 }

@@ -1,7 +1,7 @@
 html, body, #root { margin: 0; height: 100%; background: #000; overflow: hidden; }
 .scene { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
-.gear { position: fixed; right: 10px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; background: none; border: 0; color: #555; font-size: 22px; cursor: pointer; z-index: 2; }
-.gear:hover { color: #bbb; }
+.gear { position: fixed; right: 10px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; background: rgba(10, 10, 12, 0.7); border: 1px solid #333; border-radius: 50%; color: #999; font-size: 20px; line-height: 1; cursor: pointer; z-index: 2; }
+.gear:hover { color: #fff; border-color: #666; }
 .tech { position: fixed; left: 16px; bottom: 14px; margin: 0; color: #666; font: 10px/1.5 ui-monospace, Consolas, monospace; pointer-events: none; }
 .panel { position: fixed; right: 44px; top: 50%; transform: translateY(-50%); max-height: 90vh; overflow-y: auto; width: 210px; padding: 12px; display: flex; flex-direction: column; gap: 8px; z-index: 2;
   background: rgba(10, 10, 12, 0.88); border: 1px solid #222; color: #aaa; font: 11px ui-monospace, Consolas, monospace; }

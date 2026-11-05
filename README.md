@@ -30,7 +30,7 @@ All works in one place: [kaandinc.com/glyphworks](https://kaandinc.com/glyphwork
 - **Correct occlusion:** a hidden depth pass of the real shell hides back glyphs; parts marked `ghost` (glass) are skipped, so liquid shows through.
 - **Reveal timeline:** a per-vertex threshold draws each work in over 0.3-5.6 s, then a steady spin (12 s per turn).
 - **Atmosphere:** thin cross-ray glints, drifting dust, faint orbit ellipses, light bloom.
-- **Controls:** press `H` or click the dot (bottom right): replay, pause, speed, density, glyph scale, sparkles, particles, bloom, quality preset.
+- **Controls:** press `H` or click the gear (middle right): replay, pause, speed, tilt, angle, brightness, mouse push, density, glyph scale, sparkles, particles, bloom, quality preset.
 
 ## Setup
 

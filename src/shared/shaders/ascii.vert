@@ -43,12 +43,13 @@ void main() {
   vec3 w = toWorld(p);
   vec3 n = normalize(toWorldN(aNormal));
 
-  // mouse repel: push glyphs away from the pointer (xy plane), with a random depth scatter
+  // mouse repel: small, floaty drift like dust in space; each glyph wobbles on its own phase
   vec2 dm = w.xy - uMouse;
   float dl = length(dm);
   float f = smoothstep(uPushR, 0.0, dl) * uPush * uMouseStr;
-  w.xy += (dl > 1e-4 ? dm / dl : vec2(0.0)) * f * 0.45;
-  w.z += (aSeed.y - 0.5) * f * 0.6;
+  vec2 wob = vec2(sin(uTime * 1.3 + aSeed.z * 6.283), cos(uTime * 1.1 + aSeed.y * 6.283));
+  w.xy += (dl > 1e-4 ? dm / dl : vec2(0.0)) * f * 0.07 + wob * f * 0.04;
+  w.z += (aSeed.y - 0.5) * f * 0.12;
   vec3 V = normalize(cameraPosition - w);
 
   // key + moving rim light, wrapped diffuse for a soft balloon falloff

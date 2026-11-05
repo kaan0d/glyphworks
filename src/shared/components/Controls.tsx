@@ -33,7 +33,7 @@ export function Controls({ settings, apiRef }: Props) {
 
   return (
     <>
-      <button className="gear" aria-label="Controls (H)" onClick={() => setOpen(!open)}>·</button>
+      <button className="gear" aria-label="Controls (H)" onClick={() => setOpen(!open)}>⚙</button>
       {settings.technical && stats && (
         <pre className="tech">
           {`rotation ${stats.angleDeg.toFixed(2).padStart(6, '0')}°   glints ${stats.sparkles}\n` +
@@ -52,7 +52,7 @@ export function Controls({ settings, apiRef }: Props) {
           {slider('Angle offset (deg)', 'yaw', -180, 180, 1)}
           {slider('Brightness', 'brightness', 0, 3)}
           {slider('Mouse push', 'push', 0, 3)}
-          {slider('Push radius', 'pushRadius', 0.2, 2.5)}
+          {slider('Push radius', 'pushRadius', 0.1, 1.5)}
           {slider('Character density', 'density', 0.2, 1)}
           {slider('Character scale', 'glyphScale', 0.6, 2)}
           {slider('Sparkles', 'sparkle', 0, 2)}
