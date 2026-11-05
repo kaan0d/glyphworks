@@ -1,0 +1,12 @@
+html, body, #root { margin: 0; height: 100%; background: #000; overflow: hidden; }
+.scene { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+.gear { position: fixed; right: 10px; bottom: 6px; width: 28px; height: 28px; background: none; border: 0; color: #333; font-size: 22px; cursor: pointer; }
+.gear:hover { color: #999; }
+.tech { position: fixed; left: 16px; bottom: 14px; margin: 0; color: #666; font: 10px/1.5 ui-monospace, Consolas, monospace; pointer-events: none; }
+.panel { position: fixed; right: 12px; bottom: 40px; width: 210px; padding: 12px; display: flex; flex-direction: column; gap: 8px;
+  background: rgba(10, 10, 12, 0.88); border: 1px solid #222; color: #aaa; font: 11px ui-monospace, Consolas, monospace; }
+.panel label { display: flex; flex-direction: column; gap: 3px; }
+.panel .chk { flex-direction: row; align-items: center; gap: 6px; }
+.panel .row { display: flex; gap: 6px; }
+.panel button, .panel select { background: #111; color: #ccc; border: 1px solid #333; padding: 4px 8px; font: inherit; cursor: pointer; flex: 1; }
+.panel input[type='range'] { width: 100%; accent-color: #bbb; }

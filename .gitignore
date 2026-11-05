@@ -1,0 +1,14 @@
+node_modules
+dist
+*.tsbuildinfo
+.vite
+.env
+.env.*
+*.log
+.DS_Store
+Thumbs.db
+
+# AI tooling, prompts, reference media and working notes stay local
+development/
+.claude/
+CLAUDE.md
