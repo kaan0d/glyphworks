@@ -1,10 +1,17 @@
 # glyphworks
 
-![A pavé diamond ring drawn from 15,000 glyphs](docs/ring.gif)
+![A pavé diamond ring drawn from glowing glyphs](docs/gifs/ring.gif)
 
 Real-time 3D works drawn entirely as glowing glyphs. WebGL2, Three.js, custom GLSL, React UI, no video. Models are plain triangle meshes. Runs in the browser, one page per work.
 
 ## Works
+
+<table>
+<tr><td align="center"><a href="https://kaandinc.com/glyphworks/heart/"><img src="docs/gifs/heart.gif" width="200" alt="heart"><br>heart</a></td><td align="center"><a href="https://kaandinc.com/glyphworks/ring/"><img src="docs/gifs/ring.gif" width="200" alt="ring"><br>ring</a></td><td align="center"><a href="https://kaandinc.com/glyphworks/wineglass/"><img src="docs/gifs/wineglass.gif" width="200" alt="wineglass"><br>wineglass</a></td><td align="center"><a href="https://kaandinc.com/glyphworks/hourglass/"><img src="docs/gifs/hourglass.gif" width="200" alt="hourglass"><br>hourglass</a></td></tr>
+<tr><td align="center"><a href="https://kaandinc.com/glyphworks/mobius/"><img src="docs/gifs/mobius.gif" width="200" alt="mobius"><br>mobius</a></td><td align="center"><a href="https://kaandinc.com/glyphworks/knot/"><img src="docs/gifs/knot.gif" width="200" alt="knot"><br>knot</a></td><td align="center"><a href="https://kaandinc.com/glyphworks/dna/"><img src="docs/gifs/dna.gif" width="200" alt="dna"><br>dna</a></td><td align="center"><a href="https://kaandinc.com/glyphworks/nautilus/"><img src="docs/gifs/nautilus.gif" width="200" alt="nautilus"><br>nautilus</a></td></tr>
+<tr><td align="center"><a href="https://kaandinc.com/glyphworks/planet/"><img src="docs/gifs/planet.gif" width="200" alt="planet"><br>planet</a></td><td align="center"><a href="https://kaandinc.com/glyphworks/sauron-crown/"><img src="docs/gifs/sauron-crown.gif" width="200" alt="sauron-crown"><br>sauron-crown</a></td><td align="center"><a href="https://kaandinc.com/glyphworks/key/"><img src="docs/gifs/key.gif" width="200" alt="key"><br>key</a></td><td align="center"><a href="https://kaandinc.com/glyphworks/can/"><img src="docs/gifs/can.gif" width="200" alt="can"><br>can</a></td></tr>
+<tr><td align="center"><a href="https://kaandinc.com/glyphworks/beer-bottle/"><img src="docs/gifs/beer-bottle.gif" width="200" alt="beer-bottle"><br>beer-bottle</a></td><td align="center"><a href="https://kaandinc.com/glyphworks/wine-bottle/"><img src="docs/gifs/wine-bottle.gif" width="200" alt="wine-bottle"><br>wine-bottle</a></td></tr>
+</table>
 
 | Work | What it is | |
 | --- | --- | --- |
