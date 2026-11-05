@@ -50,6 +50,10 @@ src/works/<id>/         geometry of one work: builds a surface mesh with per-ver
 2. Add `<id>/index.html` (copy from `heart`, fix the script path).
 3. Add `{ id, title, description }` to `src/registry.json` and a thumbnail at `public/thumbs/<id>.jpg`.
 
+## Request a work
+
+Want to see something new built as glyphs? [Open an issue](https://github.com/kaan0d/glyphworks/issues/new?template=new-work.md) with the object and, if you have one, a reference image or photo. Simple, recognisable shapes (a bottle, a ring, a lamp) work best. Pull requests with new works are welcome too, see "Adding a work".
+
 ## Limits
 
 - Shape was matched by eye, not fitted to pixels. The heart is a clean classic heart, not a copy of any product photo.
