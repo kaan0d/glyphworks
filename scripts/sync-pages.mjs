@@ -10,8 +10,8 @@ for (const w of works) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${w.title} · glyphworks</title>
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico?v=2" sizes="48x48" />
   </head>
   <body>
     <div id="root"></div>
