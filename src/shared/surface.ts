@@ -119,6 +119,62 @@ export class MeshBuilder {
     }
   }
 
+  /**
+   * Like grid(), with options. Without `ref` the normals take one global sign from the enclosed volume
+   * (right for any closed, orientable surface); with `ref` they point away from that per-sample centre.
+   * `flip` reverses the result for open or one-sided surfaces.
+   */
+  surface(o: {
+    nu: number; nv: number; f: Fn; thr: (p: Float64Array) => number; seam?: number; w?: number
+    wrapU?: boolean; wrapV?: boolean; ref?: Fn; flip?: boolean
+  }) {
+    const { nu, nv, f, thr, ref } = o
+    const wrapU = !!o.wrapU, wrapV = !!o.wrapV
+    const NU = wrapU ? nu : nu + 1, NV = wrapV ? nv : nv + 1
+    const base = this.pos.length / 3
+    const first = this.idx.length
+    const p = new Float64Array(3), a = new Float64Array(3), b = new Float64Array(3), c = new Float64Array(3), d = new Float64Array(3), rf = new Float64Array(3)
+    const e = 1e-3
+    for (let i = 0; i < NU; i++) for (let j = 0; j < NV; j++) {
+      const u = i / nu, v = j / nv
+      f(u, v, p)
+      f(u - e, v, a); f(u + e, v, b); f(u, v - e, c); f(u, v + e, d)
+      const ux = b[0] - a[0], uy = b[1] - a[1], uz = b[2] - a[2], vx = d[0] - c[0], vy = d[1] - c[1], vz = d[2] - c[2]
+      let nx = uy * vz - uz * vy, ny = uz * vx - ux * vz, nz = ux * vy - uy * vx
+      const l = Math.hypot(nx, ny, nz) || 1
+      nx /= l; ny /= l; nz /= l
+      if (ref) {
+        ref(u, v, rf)
+        if (nx * (p[0] - rf[0]) + ny * (p[1] - rf[1]) + nz * (p[2] - rf[2]) < 0) { nx = -nx; ny = -ny; nz = -nz }
+      }
+      this.vert(p, [nx, ny, nz], thr(p), o.seam ?? 0, o.w ?? 1)
+    }
+    const at = (i: number, j: number) => base + (i % NU) * NV + (j % NV)
+    for (let i = 0; i < (wrapU ? NU : NU - 1); i++) for (let j = 0; j < (wrapV ? NV : NV - 1); j++) {
+      this.idx.push(at(i, j), at(i + 1, j), at(i, j + 1), at(i + 1, j), at(i + 1, j + 1), at(i, j + 1))
+    }
+    let flip = !!o.flip
+    if (!ref) {
+      // the winding follows the normals, so a negative volume means they point inwards
+      let vol = 0
+      const P = this.pos
+      for (let t = first; t < this.idx.length; t += 3) {
+        const i0 = this.idx[t] * 3, i1 = this.idx[t + 1] * 3, i2 = this.idx[t + 2] * 3
+        vol += P[i0] * (P[i1 + 1] * P[i2 + 2] - P[i1 + 2] * P[i2 + 1]) - P[i0 + 1] * (P[i1] * P[i2 + 2] - P[i1 + 2] * P[i2]) + P[i0 + 2] * (P[i1] * P[i2 + 1] - P[i1 + 1] * P[i2])
+      }
+      if (vol < 0) flip = !flip
+    }
+    if (flip) for (let k = base * 3; k < this.nrm.length; k++) this.nrm[k] = -this.nrm[k]
+  }
+
+  /** Append a finished mesh. */
+  merge(m: SurfaceMesh) {
+    const off = this.pos.length / 3
+    for (let i = 0; i < m.pos.length; i++) { this.pos.push(m.pos[i]); this.nrm.push(m.nrm[i]) }
+    for (let i = 0; i < m.thr.length; i++) { this.thr.push(m.thr[i]); this.seam.push(m.seam[i]); this.weight.push(m.weight[i]) }
+    for (let i = 0; i < m.idx.length; i++) this.idx.push(m.idx[i] + off)
+  }
+
   build(): SurfaceMesh {
     return {
       pos: Float32Array.from(this.pos), nrm: Float32Array.from(this.nrm), thr: Float32Array.from(this.thr),
