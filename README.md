@@ -7,7 +7,7 @@ Real-time 3D works drawn entirely as glowing glyphs. WebGL2, Three.js, custom GL
 | Work | What it is | |
 | --- | --- | --- |
 | `heart` | Hollow, inflated heart balloon, drawn from the tip upward | [Preview](https://kaandinc.com/glyphworks/heart/) |
-| `ring` | Diamond ring: band, prongs, then the faceted stone filling in | [Preview](https://kaandinc.com/glyphworks/ring/) |
+| `ring` | Pavé diamond ring imported from a 3dm model: band, head prongs, then the main stone filling in | [Preview](https://kaandinc.com/glyphworks/ring/) |
 | `bottle` | Longneck beer bottle: glass rises from the base, label and collar fill in, the crown cap closes last | [Preview](https://kaandinc.com/glyphworks/bottle/) |
 | `wineglass` | Wine glass: foot and stem first, then the hollow tulip bowl fills | [Preview](https://kaandinc.com/glyphworks/wineglass/) |
 | `hourglass` | Hourglass: pinched glass bulbs, plates, posts and a mound of sand | [Preview](https://kaandinc.com/glyphworks/hourglass/) |
