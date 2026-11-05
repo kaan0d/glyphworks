@@ -12,6 +12,7 @@ export function Work({ def }: { def: SceneDef }) {
   return (
     <>
       <SceneView settings={settings} apiRef={apiRef} def={def} />
+      <a className="back" href="../" aria-label="Back to gallery">←</a>
       <Controls settings={settings} apiRef={apiRef} />
     </>
   )
