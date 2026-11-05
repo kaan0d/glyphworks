@@ -85,6 +85,8 @@ export class GlyphRenderer {
     if (q.has('t')) this.timeline.t = +q.get('t')!
     if (q.has('angle')) this.timeline.angle = (+q.get('angle')! * Math.PI) / 180
     if (q.has('hold')) s.paused = true
+    // ?capture exposes a seek for frame-by-frame video capture (paused, driven from outside)
+    if (q.has('capture')) { s.paused = true; (window as any).__seek = (t: number, deg: number) => { this.timeline.t = t; this.timeline.angle = (deg * Math.PI) / 180 } }
   }
 
   private shader(vs: string, fs: string, extra: Record<string, { value: any }>) {
