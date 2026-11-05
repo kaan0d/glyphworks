@@ -314,14 +314,20 @@ export class GlyphRenderer {
     {
       // camera looks down -z at the origin: NDC maps linearly to the z=0 plane
       const halfH = Math.tan((FOV * Math.PI) / 360) * this.camera.position.z
-      const T = this.trail
+      const T = this.trail, R = s.pushRadius
+      const field = (x: number, y: number) => {
+        let m = 0
+        for (const t of T) { const k = Math.min(Math.hypot(t.x - x, t.y - y) / R, 1); m = Math.max(m, (1 - k * k * (3 - 2 * k)) * t.z) }
+        return m
+      }
       for (const t of T) t.z -= dt * 0.45
       while (T.length && T[0].z <= 0) T.shift()
       if (this.ptr) {
         const x = this.ptr.x * halfH * this.camera.aspect, y = this.ptr.y * halfH
         const last = T[T.length - 1]
-        if (last && Math.hypot(last.x - x, last.y - y) < 0.06) last.set(x, y, 1)
-        else { T.push(new Vector3(x, y, 1)); if (T.length > 16) T.shift() }
+        // a new sample starts at the warp already present there (or the previous sample's) and ramps up, so a half-healed area never snaps back to full
+        if (last && Math.hypot(last.x - x, last.y - y) < 0.06) { last.x = x; last.y = y; last.z = Math.min(last.z + dt * 3.45, 1) }
+        else { T.push(new Vector3(x, y, Math.min(Math.max(field(x, y), last?.z ?? 0) + dt * 3.45, 1))); if (T.length > 16) T.shift() }
       }
       for (let i = 0; i < 16; i++) u.uTrail.value[i].copy(T[i] ?? this.zero)
     }

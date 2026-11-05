@@ -45,10 +45,9 @@ void main() {
   // mouse warp: the pointer leaves a fading trail; glyphs inside it wobble like a distorted lens, no radial push
   float f = 0.0;
   for (int i = 0; i < 16; i++) {
-    float st = uTrail[i].z;
-    f += smoothstep(uPushR, 0.0, length(w.xy - uTrail[i].xy)) * st * st;
+    f = max(f, smoothstep(uPushR, 0.0, length(w.xy - uTrail[i].xy)) * uTrail[i].z);
   }
-  f = min(f, 1.0) * uPush;
+  f *= uPush;
   vec2 wob = vec2(sin(w.y * 22.0 + uTime * 3.0 + aSeed.z * 6.283), cos(w.x * 22.0 + uTime * 2.6 + aSeed.y * 6.283));
   w.xy += wob * f * 0.05;
   w.z += (aSeed.y - 0.5) * f * 0.08;
