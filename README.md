@@ -9,6 +9,21 @@ Real-time 3D works drawn entirely as glowing glyphs. WebGL2, Three.js, custom GL
 | `heart` | Hollow, inflated heart balloon, drawn from the tip upward | [Preview](https://kaandinc.com/glyphworks/heart/) |
 | `ring` | Diamond ring: band, prongs, then the faceted stone filling in | [Preview](https://kaandinc.com/glyphworks/ring/) |
 | `bottle` | Longneck beer bottle: glass rises from the base, label and collar fill in, the crown cap closes last | [Preview](https://kaandinc.com/glyphworks/bottle/) |
+| `wineglass` | Wine glass: foot and stem first, then the hollow tulip bowl fills | [Preview](https://kaandinc.com/glyphworks/wineglass/) |
+| `queen` | Chess queen: stepped base, waisted body, crown of points | [Preview](https://kaandinc.com/glyphworks/queen/) |
+| `teapot` | Teapot with a curved spout, loop handle and knobbed lid | [Preview](https://kaandinc.com/glyphworks/teapot/) |
+| `hourglass` | Hourglass: pinched glass bulbs, plates, posts and a mound of sand | [Preview](https://kaandinc.com/glyphworks/hourglass/) |
+| `lightbulb` | Light bulb: glass globe, threaded screw base, filament | [Preview](https://kaandinc.com/glyphworks/lightbulb/) |
+| `mobius` | Möbius band: a wide ribbon with one half twist | [Preview](https://kaandinc.com/glyphworks/mobius/) |
+| `knot` | Trefoil knot as one thick tube | [Preview](https://kaandinc.com/glyphworks/knot/) |
+| `klein` | Klein bottle: the neck passes through its own wall | [Preview](https://kaandinc.com/glyphworks/klein/) |
+| `dna` | DNA double helix with base pairs | [Preview](https://kaandinc.com/glyphworks/dna/) |
+| `nautilus` | Nautilus shell: logarithmic spiral with fine ribs | [Preview](https://kaandinc.com/glyphworks/nautilus/) |
+| `planet` | Ringed planet with a moon | [Preview](https://kaandinc.com/glyphworks/planet/) |
+| `paperplane` | Paper plane from flat, paper-thin facets | [Preview](https://kaandinc.com/glyphworks/paperplane/) |
+| `crown` | Crown with five points and jewels | [Preview](https://kaandinc.com/glyphworks/crown/) |
+| `key` | Old key with a round bow and toothed bit | [Preview](https://kaandinc.com/glyphworks/key/) |
+| `cupid` | Heart balloon pierced by an arrow | [Preview](https://kaandinc.com/glyphworks/cupid/) |
 
 All works in one place: [kaandinc.com/glyphworks](https://kaandinc.com/glyphworks/).
 
@@ -38,7 +53,7 @@ Capture hook: `/heart/?t=9&angle=55&hold=1` jumps the timeline (seconds, degrees
 ```
 index.html              gallery, built from src/registry.json
 src/registry.json       id, title, description of every work
-<id>/index.html         entry page of a work, served at /<id>/
+<id>/index.html         entry page of a work (written by npm run sync), served at /<id>/
 public/thumbs/<id>.jpg  gallery thumbnails
 src/shared/             renderer, shaders, timeline, controls, mesh helpers (used by every work)
 src/works/<id>/         geometry of one work: builds a surface mesh with per-vertex reveal order
@@ -46,9 +61,8 @@ src/works/<id>/         geometry of one work: builds a surface mesh with per-ver
 
 ## Adding a work
 
-1. Create `src/works/<id>/` with a `geometry/` file exporting a `SceneDef` (`build()` returns a mesh, `fit` frames the camera) and a `main.tsx` like `heart`'s.
-2. Add `<id>/index.html` (copy from `heart`, fix the script path).
-3. Add `{ id, title, description }` to `src/registry.json` and a thumbnail at `public/thumbs/<id>.jpg`.
+1. Create `src/works/<id>/scene.ts` exporting `scene` (a `SceneDef`: `build()` returns a mesh, `fit` frames the camera). `src/shared/shapes.ts` has lathe, tube, sheet and box builders; see `src/works/wineglass/scene.ts` for a short example.
+2. Add `{ id, title, description }` to `src/registry.json`, run `npm run sync` to write `<id>/index.html`, and add a thumbnail at `public/thumbs/<id>.jpg`.
 
 ## Request a work
 

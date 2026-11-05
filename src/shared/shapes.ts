@@ -90,7 +90,9 @@ export const ball = (b: MeshBuilder, at: V3, r: number, thr: Thr, w = 1) => revo
 interface TubeOpts {
   path: (t: number) => V3
   /** radius by position along the path and angle around it (angle lets a section be an ellipse that twists) */
-  radius: (t: number, ph: number) => number
+  radius?: (t: number, ph: number) => number
+  /** alternative to radius: offset (along the curvature normal, along the binormal) of the section point at angle ph */
+  section?: (t: number, ph: number) => [number, number]
   nt: number; nr?: number; closed?: boolean; thr: Thr; seam?: number; w?: number
   /** round the ends over this fraction of the path (open tubes) */
   cap?: number
@@ -121,9 +123,8 @@ export function tube(b: MeshBuilder, o: TubeOpts) {
       N = [N[0] / nl, N[1] / nl, N[2] / nl]
       const B: V3 = [T[1] * N[2] - T[2] * N[1], T[2] * N[0] - T[0] * N[2], T[0] * N[1] - T[1] * N[0]]
       const ph = TAU * v
-      let r = o.radius(t, ph)
-      if (!o.closed) { const k = Math.min(t / cap, (1 - t) / cap, 1); r *= Math.sqrt(1 - (1 - k) * (1 - k)) }
-      const c = Math.cos(ph) * r, s = Math.sin(ph) * r
+      let [c, s] = o.section ? o.section(t, ph) : [Math.cos(ph) * o.radius!(t, ph), Math.sin(ph) * o.radius!(t, ph)]
+      if (!o.closed) { const k = Math.min(t / cap, (1 - t) / cap, 1), f = Math.sqrt(1 - (1 - k) * (1 - k)); c *= f; s *= f }
       out[0] = p1[0] + c * N[0] + s * B[0]; out[1] = p1[1] + c * N[1] + s * B[1]; out[2] = p1[2] + c * N[2] + s * B[2]
     },
   })
@@ -176,3 +177,17 @@ export const scene = (fit: { h: number; w: number }, make: (b: MeshBuilder) => v
   fit,
   build: () => { const b = new MeshBuilder(); make(b); const m = b.build(); return after ? after(m) : m },
 })
+
+type G = (u: number, v: number, out: Float64Array) => void
+
+/** Scale and offset that centre a parametric surface and fit its tallest side to `size`. */
+export function normalizer(g: G, size: number, n = 70) {
+  const lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity], p = new Float64Array(3)
+  for (let i = 0; i <= n; i++) for (let j = 0; j <= n; j++) {
+    g(i / n, j / n, p)
+    for (let k = 0; k < 3; k++) { lo[k] = Math.min(lo[k], p[k]); hi[k] = Math.max(hi[k], p[k]) }
+  }
+  const c = lo.map((l, k) => (l + hi[k]) / 2)
+  const s = size / Math.max(hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2])
+  return { s, c, map: (u: number, v: number, out: Float64Array) => { g(u, v, out); for (let k = 0; k < 3; k++) out[k] = (out[k] - c[k]) * s } }
+}

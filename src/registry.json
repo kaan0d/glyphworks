@@ -38,5 +38,55 @@
     "id": "lightbulb",
     "title": "Light bulb",
     "description": "A light bulb: glass globe, threaded screw base and a looping filament."
+  },
+  {
+    "id": "mobius",
+    "title": "Möbius band",
+    "description": "A Möbius band: a wide ribbon that twists once, so the loop has a single side."
+  },
+  {
+    "id": "knot",
+    "title": "Trefoil knot",
+    "description": "A trefoil knot: one thick tube that crosses itself three times."
+  },
+  {
+    "id": "klein",
+    "title": "Klein bottle",
+    "description": "A Klein bottle: the neck bends back and passes through its own wall."
+  },
+  {
+    "id": "dna",
+    "title": "DNA",
+    "description": "A DNA double helix: two strands wind up, joined by base pairs."
+  },
+  {
+    "id": "nautilus",
+    "title": "Nautilus",
+    "description": "A nautilus shell: a ribbed tube that grows by a fixed factor each turn."
+  },
+  {
+    "id": "planet",
+    "title": "Planet",
+    "description": "A ringed planet with a moon: banded globe, two rings and a gap between them."
+  },
+  {
+    "id": "paperplane",
+    "title": "Paper plane",
+    "description": "A folded paper plane built from flat, paper-thin facets."
+  },
+  {
+    "id": "crown",
+    "title": "Crown",
+    "description": "A crown with five points, a rim ring and a jewel on every point."
+  },
+  {
+    "id": "key",
+    "title": "Key",
+    "description": "An old key: round bow, collared shaft and a toothed bit."
+  },
+  {
+    "id": "cupid",
+    "title": "Heart and arrow",
+    "description": "The heart balloon pierced by an arrow, with the heart hiding the middle of the shaft."
   }
 ]
