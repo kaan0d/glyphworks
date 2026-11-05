@@ -1,13 +1,10 @@
-import { capped, revolve, rise, scene, vessel } from '../../shared/shapes'
+import data from './mesh.json'
+import { importedMesh, type MeshData } from '../../shared/importedMesh'
+import type { SceneDef } from '../../shared/surface'
 
-/** Wine glass: foot, stem, then a tulip bowl with a hollow inside. y from -1.2 to 1.2. */
-const BOWL_Y0 = -0.2, TOP = 1.2
-const bowlR = (y: number) => 0.62 * Math.sin(0.78 * Math.PI * ((y - BOWL_Y0) / (TOP - BOWL_Y0)) ** 0.8)
-
-export const scene_ = scene({ h: 2.0, w: 1.0 }, (b) => {
-  const thr = rise(-1.2, 1.2)
-  revolve(b, capped(-1.2, -1.0, (y) => 0.05 + 0.43 * (1 - (y + 1.2) / 0.2) ** 1.6, 0.3), { thr, nv: 120 })
-  revolve(b, capped(-1.05, -0.12, (y) => 0.045 + 0.012 * Math.cos((y + 1.05) * 3), 0.03), { thr, nv: 120 })
-  revolve(b, vessel(BOWL_Y0, TOP, bowlR, 0.018, 1.15), { thr, nv: 360, nu: 260 })
-})
-export { scene_ as scene }
+/** Reveal: foot and stem rise, the faceted bowl follows, the wine fills in last. The glass does not hide the wine behind it. */
+const rules = [
+  { match: /01$/, base: 0.4, span: 0.6, seam: 0.1, weight: 1 },
+  { match: /./, base: 0, span: 0.75, seam: 0.3, weight: 1, ghost: true },
+]
+export const scene: SceneDef = { build: () => importedMesh(data as MeshData, 1.9, rules), fit: { h: 1.95, w: 1.15 } }
