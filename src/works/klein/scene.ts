@@ -1,23 +1,19 @@
-import { MeshBuilder } from '../../shared/surface'
-import { TAU, clamp01, normalizer, scene } from '../../shared/shapes'
+import { ball, capped, revolve, rise, scene, sm, spline, tube, type V3 } from '../../shared/shapes'
 
-/** Klein bottle: a bottle whose neck bends back and passes through its own wall to join the base. */
-const g = (u: number, v: number, o: Float64Array) => {
-  const U = Math.PI * u, V = TAU * v
-  const cu = Math.cos(U), su = Math.sin(U), cv = Math.cos(V), sv = Math.sin(V)
-  o[0] = (-2 / 15) * cu * (3 * cv - 30 * su + 90 * cu ** 4 * su - 60 * cu ** 6 * su + 5 * cu * cv * su)
-  o[1] = (-1 / 15) * su * (3 * cv - 3 * cu ** 2 * cv - 48 * cu ** 4 * cv + 48 * cu ** 6 * cv - 60 * su + 5 * cu * cv * su - 5 * cu ** 3 * cv * su - 80 * cu ** 5 * cv * su + 80 * cu ** 7 * cv * su)
-  o[2] = (2 / 15) * (3 + 5 * cu * su) * sv
-}
+/** Klein bottle: a pear-shaped bulb whose neck rises, bends over and comes back through the side wall into the bulb. */
+const bulb = spline([[-1.4, 0.0], [-1.36, 0.3], [-1.05, 0.64], [-0.6, 0.72], [-0.2, 0.6], [0.1, 0.34], [0.4, 0.17]])
+const T = [0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1]
+const along = (vals: number[]) => spline(T.map((t, i) => [t, vals[i]] as [number, number]))
+const px = along([0, 0, 0.3, 0.85, 1.25, 1.15, 0.7, 0.15])
+const py = along([0.25, 0.65, 1.15, 1.35, 0.85, 0.05, -0.55, -0.62])
 
-export const scene_ = scene({ h: 1.75, w: 1.3 }, (b: MeshBuilder) => {
-  const n = normalizer(g, 2.2)
-  const tmp = new Float64Array(3)
-  // the surface is non-orientable, so point normals away from the local axis of the tube instead
-  const axis = (u: number, _v: number, out: Float64Array) => {
-    out.fill(0)
-    for (let k = 0; k < 8; k++) { n.map(u, k / 8, tmp); out[0] += tmp[0] / 8; out[1] += tmp[1] / 8; out[2] += tmp[2] / 8 }
-  }
-  b.surface({ nu: 240, nv: 120, wrapV: true, f: n.map, ref: axis, thr: (p) => 0.9 * clamp01((p[0] + 1.2) / 2.4) })
-})
+export const scene_ = scene({ h: 2.1, w: 1.5 }, (b) => {
+  const thr = rise(-1.4, 1.45)
+  revolve(b, capped(-1.4, 0.4, bulb, 0.03), { thr, nu: 240, nv: 260 })
+  tube(b, {
+    path: (t): V3 => [px(t), py(t), 0], thr, nt: 220, nr: 28, cap: 0.01,
+    radius: (t) => 0.17 + 0.05 * sm(0.75, 1, t),
+  })
+  ball(b, [0, 0.4, 0], 0.17, thr)
+}, (m) => { for (let i = 0; i < m.pos.length; i += 3) m.pos[i] -= 0.34; return m })
 export { scene_ as scene }

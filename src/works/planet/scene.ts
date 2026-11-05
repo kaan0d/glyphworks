@@ -8,5 +8,5 @@ export const scene_ = scene({ h: 1.2, w: 2.0 }, (b) => {
   revolve(b, loopCurve(1.13, 0, 0.2, 0.012), { thr: ring, nu: 400, nv: 24, wrapV: true, w: 1.2 })
   revolve(b, loopCurve(1.6, 0, 0.27, 0.012), { thr: ring, nu: 440, nv: 24, wrapV: true, w: 1.2 })
   ball(b, [1.75, 0.5, 0.3], 0.12, () => 0.9)
-}, (m) => tiltZ(m, -0.4))
+}, (m) => tiltZ(m, -0.65))
 export { scene_ as scene }

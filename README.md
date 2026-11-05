@@ -10,7 +10,7 @@ Real-time 3D works drawn entirely as glowing glyphs. WebGL2, Three.js, custom GL
 | `ring` | Diamond ring: band, prongs, then the faceted stone filling in | [Preview](https://kaandinc.com/glyphworks/ring/) |
 | `bottle` | Longneck beer bottle: glass rises from the base, label and collar fill in, the crown cap closes last | [Preview](https://kaandinc.com/glyphworks/bottle/) |
 | `wineglass` | Wine glass: foot and stem first, then the hollow tulip bowl fills | [Preview](https://kaandinc.com/glyphworks/wineglass/) |
-| `queen` | Chess queen: stepped base, waisted body, crown of points | [Preview](https://kaandinc.com/glyphworks/queen/) |
+| `knight` | Chess knight: horse head and neck on a round pedestal | [Preview](https://kaandinc.com/glyphworks/knight/) |
 | `teapot` | Teapot with a curved spout, loop handle and knobbed lid | [Preview](https://kaandinc.com/glyphworks/teapot/) |
 | `hourglass` | Hourglass: pinched glass bulbs, plates, posts and a mound of sand | [Preview](https://kaandinc.com/glyphworks/hourglass/) |
 | `lightbulb` | Light bulb: glass globe, threaded screw base, filament | [Preview](https://kaandinc.com/glyphworks/lightbulb/) |

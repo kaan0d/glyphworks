@@ -11,8 +11,8 @@ export const scene_ = scene({ h: 2.25, w: 1.0 }, (b) => {
   for (let i = 0; i <= rungs; i++) {
     const y = -H + 0.1 + ((2 * H - 0.2) * i) / rungs
     const p = at(y, 0), q = at(y, OFFSET), m: V3 = [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2, (p[2] + q[2]) / 2]
-    rod(b, p, m, 0.03, thr, { nt: 6, nr: 8 })
-    rod(b, m, q, 0.03, thr, { nt: 6, nr: 8 })
+    rod(b, p, m, 0.04, thr, { nt: 6, nr: 8 })
+    rod(b, m, q, 0.04, thr, { nt: 6, nr: 8 })
     ball(b, p, 0.055, thr); ball(b, q, 0.055, thr)
   }
 })

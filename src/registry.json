@@ -20,9 +20,9 @@
     "description": "A tulip wine glass: foot and stem first, then the hollow bowl fills up."
   },
   {
-    "id": "queen",
-    "title": "Queen",
-    "description": "A chess queen: stepped base, waisted body and a crown of points."
+    "id": "knight",
+    "title": "Knight",
+    "description": "A chess knight: a horse head and neck, with ears, mane and eye, on a round pedestal."
   },
   {
     "id": "teapot",
@@ -52,7 +52,7 @@
   {
     "id": "klein",
     "title": "Klein bottle",
-    "description": "A Klein bottle: the neck bends back and passes through its own wall."
+    "description": "A Klein bottle: a pear-shaped bulb whose neck bends over and re-enters through its own wall."
   },
   {
     "id": "dna",
