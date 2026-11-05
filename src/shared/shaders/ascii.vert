@@ -10,7 +10,7 @@ uniform float uRose;
 uniform vec3 uKey;
 uniform vec3 uRim;
 uniform float uBright;
-uniform vec3 uTrail[16];
+uniform vec3 uTrail[32];
 uniform float uPush;
 uniform float uPushR;
 
@@ -44,7 +44,7 @@ void main() {
 
   // mouse warp: the pointer leaves a fading trail; glyphs inside it wobble like a distorted lens, no radial push
   float f = 0.0;
-  for (int i = 0; i < 16; i++) {
+  for (int i = 0; i < 32; i++) {
     f = max(f, smoothstep(uPushR, 0.0, length(w.xy - uTrail[i].xy)) * uTrail[i].z);
   }
   f *= uPush;
