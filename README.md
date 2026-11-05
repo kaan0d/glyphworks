@@ -6,8 +6,8 @@ Real-time 3D works drawn entirely as glowing glyphs. WebGL2, Three.js, custom GL
 
 | Work | What it is |
 | --- | --- |
-| [`heart`](works/heart) | Hollow, inflated heart balloon, drawn from the tip upward |
-| [`ring`](works/ring) | Diamond ring: band, prongs, then the faceted stone filling in |
+| [`heart`](src/works/heart) | Hollow, inflated heart balloon, drawn from the tip upward |
+| [`ring`](src/works/ring) | Diamond ring: band, prongs, then the faceted stone filling in |
 
 ## Features (shared by all works)
 
@@ -24,18 +24,18 @@ Real-time 3D works drawn entirely as glowing glyphs. WebGL2, Three.js, custom GL
 
 ```bash
 npm install
-npm run dev        # http://localhost:5173  (gallery), /works/heart/ for the heart
+npm run dev        # http://localhost:5173  (gallery), /heart/ for the heart
 npm run build      # static site in dist/, works with any static host
 ```
 
-Capture hook: `/works/heart/?t=9&angle=55&hold=1` jumps the timeline (seconds, degrees) and pauses.
+Capture hook: `/heart/?t=9&angle=55&hold=1` jumps the timeline (seconds, degrees) and pauses.
 
 ## Layout
 
 ```
-index.html              gallery, built from works/registry.json
-works/registry.json     id, title, description of every work
-works/<id>/index.html   entry page of a work
+index.html              gallery, built from src/registry.json
+src/registry.json       id, title, description of every work
+<id>/index.html         entry page of a work, served at /<id>/
 public/thumbs/<id>.jpg  gallery thumbnails
 src/shared/             renderer, shaders, timeline, controls, mesh helpers (used by every work)
 src/works/<id>/         geometry of one work: builds a surface mesh with per-vertex reveal order
@@ -44,8 +44,8 @@ src/works/<id>/         geometry of one work: builds a surface mesh with per-ver
 ## Adding a work
 
 1. Create `src/works/<id>/` with a `geometry/` file exporting a `SceneDef` (`build()` returns a mesh, `fit` frames the camera) and a `main.tsx` like `heart`'s.
-2. Add `works/<id>/index.html` (copy from `heart`, fix the script path).
-3. Add `{ id, title, description }` to `works/registry.json` and a thumbnail at `public/thumbs/<id>.jpg`.
+2. Add `<id>/index.html` (copy from `heart`, fix the script path).
+3. Add `{ id, title, description }` to `src/registry.json` and a thumbnail at `public/thumbs/<id>.jpg`.
 
 ## Limits
 
