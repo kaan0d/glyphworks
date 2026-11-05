@@ -27,7 +27,7 @@ function band(b: MeshBuilder) {
 }
 
 function prongs(b: MeshBuilder) {
-  const top = K.girdleY + 0.02, h = top - K.prongBaseY
+  const top = K.girdleY + 0.01, h = top - K.prongBaseY
   // prongs hug the pavilion: radius grows from the culet to the girdle
   const radial = (t: number) => K.culetR + 0.015 + (K.girdleR - K.culetR + 0.012) * t
   for (let k = 0; k < K.prongs; k++) {
@@ -87,4 +87,4 @@ function buildRingMesh(): SurfaceMesh {
   return b.build()
 }
 
-export const ringScene: SceneDef = { build: buildRingMesh, fit: { h: 1.9, w: 1.5 } }
+export const ringScene: SceneDef = { build: buildRingMesh, fit: { h: 1.75, w: 1.4 } }
