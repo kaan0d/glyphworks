@@ -10,8 +10,7 @@ uniform float uRose;
 uniform vec3 uKey;
 uniform vec3 uRim;
 uniform float uBright;
-uniform vec2 uMouse;
-uniform float uMouseStr;
+uniform vec3 uTrail[16];
 uniform float uPush;
 uniform float uPushR;
 
@@ -43,13 +42,16 @@ void main() {
   vec3 w = toWorld(p);
   vec3 n = normalize(toWorldN(aNormal));
 
-  // mouse repel: small, floaty drift like dust in space; each glyph wobbles on its own phase
-  vec2 dm = w.xy - uMouse;
-  float dl = length(dm);
-  float f = smoothstep(uPushR, 0.0, dl) * uPush * uMouseStr;
-  vec2 wob = vec2(sin(uTime * 1.3 + aSeed.z * 6.283), cos(uTime * 1.1 + aSeed.y * 6.283));
-  w.xy += (dl > 1e-4 ? dm / dl : vec2(0.0)) * f * 0.07 + wob * f * 0.04;
-  w.z += (aSeed.y - 0.5) * f * 0.12;
+  // mouse warp: the pointer leaves a fading trail; glyphs inside it wobble like a distorted lens, no radial push
+  float f = 0.0;
+  for (int i = 0; i < 16; i++) {
+    float st = uTrail[i].z;
+    f += smoothstep(uPushR, 0.0, length(w.xy - uTrail[i].xy)) * st * st;
+  }
+  f = min(f, 1.0) * uPush;
+  vec2 wob = vec2(sin(w.y * 22.0 + uTime * 3.0 + aSeed.z * 6.283), cos(w.x * 22.0 + uTime * 2.6 + aSeed.y * 6.283));
+  w.xy += wob * f * 0.05;
+  w.z += (aSeed.y - 0.5) * f * 0.08;
   vec3 V = normalize(cameraPosition - w);
 
   // key + moving rim light, wrapped diffuse for a soft balloon falloff

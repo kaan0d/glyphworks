@@ -55,12 +55,13 @@ export class GlyphRenderer {
   private uni = {
     uTime: U(0), uT0: U(ANIM.drawStart), uT1: U(ANIM.drawEnd), uRot: U(new Matrix3()),
     uRes: U(new Vector2(1, 1)), uKey: U(new Vector3(0, 0.8, 0.6).normalize()), uRim: U(new Vector3(1, 0.5, 0).normalize()),
-    uRose: U(0), uBright: U(1), uMouse: U(new Vector2(0, 0)), uMouseStr: U(0), uPush: U(1), uPushR: U(0.35),
+    uRose: U(0), uBright: U(1), uTrail: U(Array.from({ length: 16 }, () => new Vector3())), uPush: U(1), uPushR: U(0.35),
   }
   // pointer in NDC; null when outside the canvas. Shader sees a smoothed world position + fade strength.
   private ptr: Vector2 | null = null
-  private ptrSmooth = new Vector2()
+  private trail: Vector3[] = [] // newest last; z = strength, fades slowly so the warp heals gradually
   private tmpR = new Matrix4()
+  private zero = new Vector3()
   private onMove = (e: PointerEvent) => {
     const r = this.canvas.getBoundingClientRect()
     this.ptr = new Vector2(((e.clientX - r.left) / r.width) * 2 - 1, -(((e.clientY - r.top) / r.height) * 2 - 1))
@@ -313,10 +314,16 @@ export class GlyphRenderer {
     {
       // camera looks down -z at the origin: NDC maps linearly to the z=0 plane
       const halfH = Math.tan((FOV * Math.PI) / 360) * this.camera.position.z
-      if (this.ptr) this.ptrSmooth.lerp(this.ptr, Math.min(dt * 6, 1))
-      u.uMouse.value.set(this.ptrSmooth.x * halfH * this.camera.aspect, this.ptrSmooth.y * halfH)
-      const target = this.ptr ? 1 : 0
-      u.uMouseStr.value += (target - u.uMouseStr.value) * Math.min(dt * (target ? 3 : 1.2), 1)
+      const T = this.trail
+      for (const t of T) t.z -= dt * 0.45
+      while (T.length && T[0].z <= 0) T.shift()
+      if (this.ptr) {
+        const x = this.ptr.x * halfH * this.camera.aspect, y = this.ptr.y * halfH
+        const last = T[T.length - 1]
+        if (last && Math.hypot(last.x - x, last.y - y) < 0.06) last.set(x, y, 1)
+        else { T.push(new Vector3(x, y, 1)); if (T.length > 16) T.shift() }
+      }
+      for (let i = 0; i < 16; i++) u.uTrail.value[i].copy(T[i] ?? this.zero)
     }
     // key light fixed, rim light circles: L(t) = normalize(cos .9t, .5, sin .9t)
     u.uRim.value.set(Math.cos(t * 0.9), 0.5, Math.sin(t * 0.9)).normalize()
