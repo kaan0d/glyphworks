@@ -6,13 +6,13 @@ export const RING = {
   bandB: 0.11, // half width (front-back)
   squareness: 0.45, // cross-section exponent: 1 = ellipse, smaller = squarer
   facets: 16, // sides of the stone
-  tableR: 0.19,
-  tableY: 0.96,
-  girdleR: 0.22,
-  girdleY: 0.9,
-  culetR: 0.07, // pavilion ends in a small flat bottom resting on the band
+  tableR: 0.2185,
+  tableY: 1.01,
+  girdleR: 0.253,
+  girdleY: 0.94,
+  culetR: 0.0805, // pavilion ends in a small flat bottom resting on the band
   culetY: 0.63,
   prongs: 4,
   prongBaseY: 0.6,
-  prongRadius: 0.016,
+  prongRadius: 0.018,
 }
