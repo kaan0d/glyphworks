@@ -4,10 +4,12 @@ Real-time 3D works drawn entirely as glowing glyphs. WebGL2, Three.js, custom GL
 
 ## Works
 
-| Work | What it is |
-| --- | --- |
-| [`heart`](src/works/heart) | Hollow, inflated heart balloon, drawn from the tip upward |
-| [`ring`](src/works/ring) | Diamond ring: band, prongs, then the faceted stone filling in |
+| Work | What it is | |
+| --- | --- | --- |
+| `heart` | Hollow, inflated heart balloon, drawn from the tip upward | [Preview](https://kaandinc.com/glyphworks/heart/) |
+| `ring` | Diamond ring: band, prongs, then the faceted stone filling in | [Preview](https://kaandinc.com/glyphworks/ring/) |
+
+All works in one place: [kaandinc.com/glyphworks](https://kaandinc.com/glyphworks/).
 
 ## Features (shared by all works)
 

@@ -27,29 +27,28 @@ function band(b: MeshBuilder) {
 }
 
 function prongs(b: MeshBuilder) {
+  const top = K.girdleY + 0.02, h = top - K.prongBaseY
+  // prongs hug the pavilion: radius grows from the culet to the girdle
+  const radial = (t: number) => K.culetR + 0.015 + (K.girdleR - K.culetR + 0.012) * t
   for (let k = 0; k < K.prongs; k++) {
     const th = (TAU * (k + 0.5)) / K.prongs
     const c = Math.cos(th), s = Math.sin(th)
-    const radial = (t: number) => K.prongBaseR + (K.prongTipR - K.prongBaseR) * Math.sin(t * Math.PI * 0.55) / Math.sin(Math.PI * 0.55)
-    const height = (t: number) => K.prongBaseY + (K.prongTipY - K.prongBaseY) * t
     const f = (u: number, v: number, o: Float64Array) => {
       const t = Math.min(Math.max(u, 0), 1.0001)
-      const r0 = radial(t), y0 = height(t)
-      const dr = (radial(t + 1e-3) - radial(t - 1e-3)) / 2e-3, dy = K.prongTipY - K.prongBaseY
-      const tl = Math.hypot(dr, dy)
-      // frame: tangent T=(dr*c, dy, dr*s)/tl, e1 horizontal tangential, e2 = T x e1
+      const r0 = radial(t), y0 = K.prongBaseY + h * t
+      const dr = K.girdleR - K.culetR + 0.012
+      const tl = Math.hypot(dr, h)
       const e1 = [-s, 0, c]
-      const T = [(dr * c) / tl, dy / tl, (dr * s) / tl]
+      const T = [(dr * c) / tl, h / tl, (dr * s) / tl]
       const e2 = [T[1] * e1[2] - T[2] * e1[1], T[2] * e1[0] - T[0] * e1[2], T[0] * e1[1] - T[1] * e1[0]]
-      const rad = K.prongRadius * (1 - 0.45 * t), ph = TAU * v
-      const cx = r0 * c, cz = r0 * s
-      o[0] = cx + rad * (Math.cos(ph) * e1[0] + Math.sin(ph) * e2[0])
+      const rad = K.prongRadius * (1 - 0.4 * t), ph = TAU * v
+      o[0] = r0 * c + rad * (Math.cos(ph) * e1[0] + Math.sin(ph) * e2[0])
       o[1] = y0 + rad * (Math.cos(ph) * e1[1] + Math.sin(ph) * e2[1])
-      o[2] = cz + rad * (Math.cos(ph) * e1[2] + Math.sin(ph) * e2[2])
+      o[2] = r0 * s + rad * (Math.cos(ph) * e1[2] + Math.sin(ph) * e2[2])
     }
-    const ref = (u: number, _v: number, o: Float64Array) => { o[0] = radial(u) * c; o[1] = height(u); o[2] = radial(u) * s }
-    const thr = (p: Float64Array) => 0.5 + 0.2 * Math.min(Math.max((p[1] - K.prongBaseY) / (K.prongTipY - K.prongBaseY), 0), 1)
-    b.grid(18, 10, f, ref, thr, 0.3, 1.5, false, true)
+    const ref = (u: number, _v: number, o: Float64Array) => { o[0] = radial(u) * c; o[1] = K.prongBaseY + h * u; o[2] = radial(u) * s }
+    const thr = (p: Float64Array) => 0.5 + 0.2 * Math.min(Math.max((p[1] - K.prongBaseY) / h, 0), 1)
+    b.grid(18, 10, f, ref, thr, 0.5, 1.5, false, true)
   }
 }
 
@@ -58,8 +57,8 @@ function stone(b: MeshBuilder) {
   const N = K.facets, d = TAU / N
   const thr = (p: number[]) => 0.7 + 0.3 * Math.min(Math.max((p[1] - K.culetY) / (K.tableY - K.culetY), 0), 1)
   const ring = (r: number, y: number, k: number, off: number) => [r * Math.cos((k + off) * d), y, r * Math.sin((k + off) * d)]
-  const culet = [0, K.culetY, 0], centre = [0, K.tableY, 0]
-  const W = 1.6, S = 0.3
+  const centre = [0, K.tableY, 0]
+  const W = 1.6, S = 0.5
   for (let k = 0; k < N; k++) {
     const t0 = ring(K.tableR, K.tableY, k, 0), t1 = ring(K.tableR, K.tableY, k + 1, 0)
     const g0 = ring(K.girdleR, K.girdleY, k, 0.5), g1 = ring(K.girdleR, K.girdleY, k + 1, 0.5)
@@ -67,8 +66,10 @@ function stone(b: MeshBuilder) {
     b.flat(centre, t1, t0, thr, S, W, [0, 1, 0]) // table
     b.flat(t0, t1, g0, thr, S, W, o) // crown, kite
     b.flat(t1, g1, g0, thr, S, W, o) // crown, star
-    const p0 = ring(K.girdleR, K.girdleY, k, 0.5), p1 = ring(K.girdleR, K.girdleY, k + 1, 0.5)
-    b.flat(p0, p1, culet, thr, S, W, [Math.cos((k + 1) * d), -0.5, Math.sin((k + 1) * d)]) // pavilion
+    const c0 = ring(K.culetR, K.culetY, k, 0), c1 = ring(K.culetR, K.culetY, k + 1, 0)
+    const o2 = [Math.cos((k + 0.5) * d), -0.6, Math.sin((k + 0.5) * d)]
+    b.flat(g0, c0, c1, thr, S, W, o2) // pavilion
+    b.flat(g0, c1, g1, thr, S, W, [Math.cos((k + 1) * d), -0.6, Math.sin((k + 1) * d)])
   }
   // girdle band: thin vertical strip just under the crown rim
   for (let k = 0; k < N; k++) {
@@ -86,4 +87,4 @@ function buildRingMesh(): SurfaceMesh {
   return b.build()
 }
 
-export const ringScene: SceneDef = { build: buildRingMesh, fit: { h: 1.7, w: 1.45 } }
+export const ringScene: SceneDef = { build: buildRingMesh, fit: { h: 1.9, w: 1.5 } }

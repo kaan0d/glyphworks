@@ -1,20 +1,18 @@
-/** Diamond ring, world units. Whole model is centred on y = 0. */
+/** Diamond ring, world units. Proportions follow a solitaire seen face-on: thick band, wide stone narrowing to the band. */
 export const RING = {
-  bandCy: -0.16, // band centre
-  bandR: 0.75, // centreline radius
-  bandA: 0.045, // half thickness (radial)
-  bandB: 0.1, // half width (front-back)
+  bandCy: -0.32, // band centre
+  bandR: 0.69, // centreline radius (outer 0.80, hole 0.58)
+  bandA: 0.11, // half thickness (radial)
+  bandB: 0.15, // half width (front-back)
   squareness: 0.45, // cross-section exponent: 1 = ellipse, smaller = squarer
   facets: 16, // sides of the stone
-  tableR: 0.14,
-  tableY: 0.96,
-  girdleR: 0.25,
-  girdleY: 0.88,
-  culetY: 0.66,
+  tableR: 0.3,
+  tableY: 1.1,
+  girdleR: 0.37,
+  girdleY: 1.02,
+  culetR: 0.1, // pavilion ends in a small flat bottom resting on the band
+  culetY: 0.5,
   prongs: 4,
-  prongBaseY: 0.6,
-  prongBaseR: 0.09,
-  prongTipY: 0.9,
-  prongTipR: 0.275,
-  prongRadius: 0.026,
+  prongBaseY: 0.46,
+  prongRadius: 0.024,
 }
