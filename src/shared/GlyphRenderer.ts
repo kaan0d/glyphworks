@@ -8,23 +8,23 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js'
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js'
 
-import common from '../shaders/common.glsl?raw'
-import asciiVert from '../shaders/ascii.vert?raw'
-import asciiFrag from '../shaders/ascii.frag?raw'
-import depthVert from '../shaders/depth.vert?raw'
-import depthFrag from '../shaders/depth.frag?raw'
-import sparkVert from '../shaders/sparkle.vert?raw'
-import sparkFrag from '../shaders/sparkle.frag?raw'
-import partVert from '../shaders/particles.vert?raw'
-import partFrag from '../shaders/particles.frag?raw'
+import common from './shaders/common.glsl?raw'
+import asciiVert from './shaders/ascii.vert?raw'
+import asciiFrag from './shaders/ascii.frag?raw'
+import depthVert from './shaders/depth.vert?raw'
+import depthFrag from './shaders/depth.frag?raw'
+import sparkVert from './shaders/sparkle.vert?raw'
+import sparkFrag from './shaders/sparkle.frag?raw'
+import partVert from './shaders/particles.vert?raw'
+import partFrag from './shaders/particles.frag?raw'
 
-import { ANIM } from '../config/animation'
-import { MAX_GLYPHS, MAX_SPARKLES, QUALITY } from '../config/quality'
-import type { Settings } from '../config/scene'
-import { Timeline } from '../animation/timeline'
-import { buildHeart } from '../geometry/heartSurface'
-import { rng } from '../../../shared/random'
-import { makeGlyphAtlas } from '../../../shared/glyphAtlas'
+import { ANIM } from './config/animation'
+import { MAX_GLYPHS, MAX_SPARKLES, QUALITY } from './config/quality'
+import type { Settings } from './config/scene'
+import { Timeline } from './timeline'
+import { rng } from './random'
+import { makeGlyphAtlas } from './glyphAtlas'
+import { sampleMesh, type SceneDef } from './surface'
 
 const FOV = 28
 const U = <T>(v: T) => ({ value: v })
@@ -36,7 +36,7 @@ function randUnit(r: () => number) {
   return v.lengthSq() < 1e-4 ? new Vector3(0, 1, 0) : v.normalize()
 }
 
-export class HeartRenderer {
+export class GlyphRenderer {
   private renderer: WebGLRenderer
   private scene = new Scene()
   private camera = new PerspectiveCamera(FOV, 1, 0.1, 40)
@@ -73,7 +73,7 @@ export class HeartRenderer {
   private activeSparkles = 0
   private onLost = (e: Event) => e.preventDefault()
 
-  constructor(private canvas: HTMLCanvasElement, private s: Settings) {
+  constructor(private canvas: HTMLCanvasElement, private s: Settings, private def: SceneDef) {
     this.renderer = new WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: 'high-performance' })
     this.renderer.setClearColor(0x000000, 1)
     canvas.addEventListener('webglcontextlost', this.onLost)
@@ -97,8 +97,8 @@ export class HeartRenderer {
   }
 
   private build() {
-    const heart = buildHeart(MAX_GLYPHS)
-    const { samples, mesh } = heart
+    const mesh = this.def.build()
+    const samples = sampleMesh(mesh, MAX_GLYPHS)
     const atlas = makeGlyphAtlas()
     this.disposables.push(atlas.tex)
 
@@ -260,7 +260,7 @@ export class HeartRenderer {
     this.camera.aspect = this.w / this.h
     // fit heart (height ~3.6, width ~3.0 incl. orbit margin) at any aspect without distortion
     const t = Math.tan((FOV * Math.PI) / 360)
-    const dist = Math.max(1.5 / t, 1.15 / (t * this.camera.aspect))
+    const dist = Math.max(this.def.fit.h / t, this.def.fit.w / (t * this.camera.aspect))
     this.camera.position.set(0, 0, dist)
     this.camera.lookAt(0, 0, 0)
     this.camera.updateProjectionMatrix()

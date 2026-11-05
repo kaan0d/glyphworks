@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { Settings } from '../config/scene'
 import type { QualityName } from '../config/quality'
-import type { SceneApi } from './HeartScene'
+import type { SceneApi } from './SceneView'
 
 type Props = { settings: Settings; apiRef: { current: SceneApi | null } }
 

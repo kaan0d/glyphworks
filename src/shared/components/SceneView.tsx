@@ -1,15 +1,16 @@
 import { useEffect, useRef } from 'react'
-import { HeartRenderer, type Stats } from '../rendering/HeartRenderer'
+import { GlyphRenderer, type Stats } from '../GlyphRenderer'
 import type { Settings } from '../config/scene'
+import type { SceneDef } from '../surface'
 
 export interface SceneApi { replay(): void; stats(): Stats | null; setQuality(): void }
 
-export function HeartScene({ settings, apiRef }: { settings: Settings; apiRef: { current: SceneApi | null } }) {
+export function SceneView({ settings, apiRef, def }: { settings: Settings; apiRef: { current: SceneApi | null }; def: SceneDef }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
     const canvas = canvasRef.current!
-    const r = new HeartRenderer(canvas, settings)
+    const r = new GlyphRenderer(canvas, settings, def)
     apiRef.current = { replay: () => r.replay(), stats: () => r.getStats(), setQuality: () => r.setQuality() }
     const fit = () => { r.resize(canvas.clientWidth, canvas.clientHeight) }
     fit()
@@ -19,7 +20,7 @@ export function HeartScene({ settings, apiRef }: { settings: Settings; apiRef: {
     const loop = (t: number) => { r.frame(t); raf = requestAnimationFrame(loop) }
     raf = requestAnimationFrame(loop)
     return () => { cancelAnimationFrame(raf); ro.disconnect(); apiRef.current = null; r.dispose() }
-  }, [settings, apiRef])
+  }, [settings, apiRef, def])
 
   return <canvas ref={canvasRef} className="scene" />
 }

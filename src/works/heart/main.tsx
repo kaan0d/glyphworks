@@ -1,5 +1,6 @@
 import { createRoot } from 'react-dom/client'
-import { App } from './app/App'
-import './styles/global.css'
+import { Work } from '../../shared/components/Work'
+import { heartScene } from './geometry/heartSurface'
+import '../../shared/global.css'
 
-createRoot(document.getElementById('root')!).render(<App />)
+createRoot(document.getElementById('root')!).render(<Work def={heartScene} />)

@@ -1,4 +1,4 @@
-import { ANIM } from '../config/animation'
+import { ANIM } from './config/animation'
 
 export const TAU = Math.PI * 2
 const smooth = (a: number, b: number, x: number) => {

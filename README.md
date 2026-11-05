@@ -6,9 +6,10 @@ Real-time 3D works drawn entirely as glowing glyphs. WebGL2, Three.js, custom GL
 
 | Work | What it is |
 | --- | --- |
-| [`heart`](works/heart) | Hollow, inflated heart balloon built from ~15k glyphs, with moving light, glints, orbits and bloom |
+| [`heart`](works/heart) | Hollow, inflated heart balloon, drawn from the tip upward |
+| [`ring`](works/ring) | Diamond ring: band, prongs, then the faceted stone filling in (after the reference video) |
 
-## Features (heart)
+## Features (shared by all works)
 
 - **Procedural shell:** outer heart contour and inner hole contour, blended into a pillow-shaped front and back surface with sealed seams and foil pleats; analytic normals.
 - **Glyph renderer:** area-uniform surface samples drawn as instanced quads from a glyph atlas; glyph picked by lighting, centre snapped to the pixel grid so glyphs stay sharp while rotating.
@@ -32,24 +33,19 @@ Capture hook: `/works/heart/?t=9&angle=55&hold=1` jumps the timeline (seconds, d
 ## Layout
 
 ```
-index.html              gallery, one link per work
-works/<name>/index.html entry page of a work
-src/shared/             code reused by all works (glyph atlas, seeded random)
-src/works/<name>/       one folder per work
-  app/ components/      React shell and controls
-  config/               tuning: geometry, quality, animation, defaults
-  geometry/             surface maths and sampling
-  rendering/            renderer class
-  shaders/              GLSL
-  animation/            timeline
-vite.config.ts          list of works (one entry each)
+index.html              gallery, built from works/registry.json
+works/registry.json     id, title, description of every work
+works/<id>/index.html   entry page of a work
+public/thumbs/<id>.jpg  gallery thumbnails
+src/shared/             renderer, shaders, timeline, controls, mesh helpers (used by every work)
+src/works/<id>/         geometry of one work: builds a surface mesh with per-vertex reveal order
 ```
 
 ## Adding a work
 
-1. Copy `src/works/heart` to `src/works/<name>` and `works/heart/index.html` to `works/<name>/index.html` (fix the script path).
-2. Add `<name>` to the `works` array in `vite.config.ts` and a link in `index.html`.
-3. Move anything a second work needs into `src/shared/`.
+1. Create `src/works/<id>/` with a `geometry/` file exporting a `SceneDef` (`build()` returns a mesh, `fit` frames the camera) and a `main.tsx` like `heart`'s.
+2. Add `works/<id>/index.html` (copy from `heart`, fix the script path).
+3. Add `{ id, title, description }` to `works/registry.json` and a thumbnail at `public/thumbs/<id>.jpg`.
 
 ## Limits
 
